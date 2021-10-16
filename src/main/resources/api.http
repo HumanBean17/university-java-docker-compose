@@ -1,0 +1,5 @@
+GET http://localhost:8080/api/getAllGroups
+
+###
+
+GET http://localhost:8080/api/saveRandomGroup
