@@ -20,8 +20,8 @@ public class Student implements Serializable {
     @Column(name = "id")
     UUID id;
 
+    @OneToOne
     @JoinColumn(name = "group_id")
-    @OneToOne(targetEntity = Group.class)
     @JsonBackReference
     Group groupEntity;
 }
