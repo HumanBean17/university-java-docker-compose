@@ -1,8 +1,17 @@
+### Get groups
 GET http://localhost:8080/api/getAllGroups
 
+### Save random group
+GET http://localhost:8080/api/saveRandomGroup
+
 ###
+POST http://localhost:8080/api/addStudent
+Content-Type: application/json
 
-POST http://localhost:8080/api/saveRandomGroup
-Content-Type: App
+{
+  "id": "a30a8751-3b42-48ec-856c-a4c298462451",
+  "name": "Dmitry"
+}
 
-
+###
+GET http://localhost:8080/api/getAllStudents

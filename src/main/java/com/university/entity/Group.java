@@ -7,6 +7,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -24,6 +26,10 @@ public class Group implements Serializable {
 
     @Column(name = "group_code", nullable = false)
     UUID groupCode;
+
+    @OneToMany(targetEntity = Student.class, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    Set<Student> students = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "speciality_id")

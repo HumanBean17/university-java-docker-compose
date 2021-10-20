@@ -1,18 +1,32 @@
 package com.university.service;
 
 import com.university.entity.Group;
+import com.university.entity.Student;
 import com.university.repository.GroupRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.university.repository.RedisRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class UniversityService {
 
-    @Autowired
-    private GroupRepository groupRepository;
+    private final GroupRepository groupRepository;
+    private final RedisRepository redisRepository;
+
+    @Transactional
+    public void saveStudent(Student student) {
+        redisRepository.save(student);
+    }
+
+    @Transactional(readOnly = true)
+    public Map<String, Object> getAllStudents() {
+        return redisRepository.findAllStudents();
+    }
 
     @Transactional
     public Group saveGroup(Group group) {
