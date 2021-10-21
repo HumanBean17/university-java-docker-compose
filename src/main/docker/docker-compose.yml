@@ -10,19 +10,28 @@ services:
     depends_on:
       - postgres
       - redis
+      - elastic
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/compose-postgres
       - SPRING_DATASOURCE_USERNAME=compose-postgres
       - SPRING_DATASOURCE_PASSWORD=compose-postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
   redis:
-    image: "redis:alpine"
-    container_name: "redis"
+    image: redis:alpine
+    container_name: redis
     hostname: redis
     volumes:
       - db_data:/var/lib/redis/data/
     ports:
       - "6379:6379"
+  elastic:
+    image: elasticsearch:6.8.18
+    container_name: elastic
+    hostname: elastic
+    volumes:
+      - db_data:/var/lib/elastic-search/data
+    ports:
+      - "9200:9200"
   postgres:
     image: 'postgres:13.1-alpine'
     container_name: postgres
