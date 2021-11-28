@@ -1,8 +1,10 @@
 package com.university.service;
 
 import com.university.entity.Group;
+import com.university.entity.Lecture;
 import com.university.entity.Student;
 import com.university.repository.GroupRepository;
+import com.university.repository.LectureRepository;
 import com.university.repository.RedisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,8 +17,19 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UniversityService {
 
+    private final LectureRepository lectureRepository;
     private final GroupRepository groupRepository;
     private final RedisRepository redisRepository;
+
+    @Transactional
+    public void saveLecture(Lecture lecture) {
+        lectureRepository.save(lecture);
+    }
+
+//    @Transactional(readOnly = true)
+//    public Lecture getLectureByText(String containedText) {
+//        lectureRepository
+//    }
 
     @Transactional
     public void saveStudent(Student student) {

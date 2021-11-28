@@ -1,6 +1,7 @@
 package com.university.rest;
 
 import com.university.entity.Group;
+import com.university.entity.Lecture;
 import com.university.entity.Student;
 import com.university.service.UniversityService;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +24,15 @@ public class UniversityController {
 
     private final UniversityService universityService;
 
-    @PostMapping(value = "/addStudent", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> add(@RequestBody Student student) {
+    @PostMapping(value = "/addStudent", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> addStudent(@RequestBody Student student) {
         universityService.saveStudent(student);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/addLecture", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> addLecture(@RequestBody Lecture lecture) {
+        universityService.saveLecture(lecture);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

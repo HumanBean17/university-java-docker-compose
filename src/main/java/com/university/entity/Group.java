@@ -1,7 +1,6 @@
 package com.university.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import liquibase.pro.packaged.J;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 

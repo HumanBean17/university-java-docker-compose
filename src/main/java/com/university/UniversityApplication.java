@@ -9,6 +9,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class UniversityApplication {
 
 	public static void main(String[] args) {
+//		try {
+//			Thread.sleep(60000);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		SpringApplication.run(UniversityApplication.class, args);
 	}
 
