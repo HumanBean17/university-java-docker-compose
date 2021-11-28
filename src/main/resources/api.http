@@ -14,4 +14,12 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:8080/api/addLecture
+Content-Type: application/json
+
+{
+  "id": "a30a8751-3b42-48ec-856c-a4c298462451"
+}
+
+###
 GET http://localhost:8080/api/getAllStudents

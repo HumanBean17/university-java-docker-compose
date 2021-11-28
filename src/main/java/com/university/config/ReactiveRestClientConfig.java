@@ -14,7 +14,7 @@
 //    @Bean
 //    public ReactiveElasticsearchClient reactiveElasticsearchClient() {
 //        final ClientConfiguration clientConfiguration = ClientConfiguration.builder()
-//            .connectedTo("elastic:9200") //
+//            .connectedTo("0.0.0.0:9200") //
 //            .build();
 //        return ReactiveRestClients.create(clientConfiguration);
 //

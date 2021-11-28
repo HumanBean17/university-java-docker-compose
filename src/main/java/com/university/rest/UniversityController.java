@@ -36,6 +36,11 @@ public class UniversityController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+//    @GetMapping(value = "/getLecture")
+//    public Lecture getLecture() {
+//        universityService.
+//    }
+
     @GetMapping(value = "/getAllStudents", produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Object> getAllStudents() {
         return universityService.getAllStudents();
