@@ -24,8 +24,8 @@ public class Schedule implements Serializable {
     @Column(name = "date")
     LocalDateTime date;
 
-//    @OneToMany(targetEntity = Lecture.class)
-//    Set<Lecture> lectures = new HashSet<>();
+    @OneToMany(targetEntity = Lecture.class)
+    Set<Lecture> lectures = new HashSet<>();
     @OneToMany(targetEntity = Group.class)
     Set<Group> groups = new HashSet<>();
 

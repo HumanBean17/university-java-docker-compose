@@ -18,8 +18,18 @@ POST http://localhost:8080/api/addLecture
 Content-Type: application/json
 
 {
-  "id": "a30a8751-3b42-48ec-856c-a4c298462451"
+  "id": "a30a8751-3b32-48fc-856c-a4c298462451",
+  "name": "Math",
+  "text": "Hello World"
 }
 
 ###
-GET http://localhost:8080/api/getAllStudents
+GET http://localhost:8080/api/getLectures
+
+###
+POST http://localhost:8080/api/lab_1
+Content-Type: application/json
+
+{
+  "lecturePhrase": "World"
+}

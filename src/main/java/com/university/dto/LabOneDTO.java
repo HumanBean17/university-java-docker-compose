@@ -1,2 +1,4 @@
-package com.university.dto;public class LabOneDTO {
+package com.university.dto;
+
+public class LabOneDTO {
 }

@@ -14,23 +14,15 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-//@Entity
-//@Table(name = "lecture")
 @Document(indexName = "lectureindex")
-public class Lecture implements Serializable {
+public class LectureText implements Serializable {
 
     @Id
-//    @Column(name = "id")
+    @Column(name = "id")
     String id;
-//    @Column(name = "name")
-//    @Field(type = FieldType.Text, name = "name")
-//    String name;
-////    @Column(name = "text")
-//    @Field(type = FieldType.Text, name = "text")
-//    String text;
 
-//    @ManyToOne
-//    @JoinColumn(name = "subject_id")
-//    @Field(type = FieldType.Nested, includeInParent = true)
-//    Subject subject;
+    @Column(name = "text")
+    @Field(type = FieldType.Text, name = "text")
+    String text;
+
 }
