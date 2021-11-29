@@ -24,7 +24,7 @@ public class Group implements Serializable {
     UUID id;
 
     @Column(name = "group_code", nullable = false)
-    UUID groupCode;
+    String groupCode;
 
     @OneToMany(targetEntity = Student.class, cascade = CascadeType.ALL)
     @JsonManagedReference

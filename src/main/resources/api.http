@@ -33,3 +33,18 @@ Content-Type: application/json
 {
   "lecturePhrase": "World"
 }
+
+###
+
+GET http://localhost:8080/api/labOneData
+
+###
+
+POST http://localhost:8080/api/labOneQuery
+Content-Type: application/json
+
+{
+  "lecturePhrase": ""
+}
+
+###

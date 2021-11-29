@@ -21,10 +21,10 @@ public class Visit implements Serializable {
     @Column(name = "is_visit")
     boolean isVisit;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "schedule_id")
     Schedule schedule;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "student_id")
     Student student;
 }

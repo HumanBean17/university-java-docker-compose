@@ -1,5 +1,7 @@
 package com.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,9 +26,12 @@ public class Schedule implements Serializable {
     @Column(name = "date")
     LocalDateTime date;
 
-    @OneToMany(targetEntity = Lecture.class)
-    Set<Lecture> lectures = new HashSet<>();
+    @OneToOne(targetEntity = Lecture.class)
+    @ToString.Exclude
+    Lecture lecture;
+
     @OneToMany(targetEntity = Group.class)
+    @ToString.Exclude
     Set<Group> groups = new HashSet<>();
 
 }
