@@ -1,6 +1,8 @@
 package com.university.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.data.redis.core.RedisHash;
 
@@ -12,7 +14,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString//(exclude = "groupEntity")
 @Entity
 @Table(name = "student")
 public class Student implements Serializable {
@@ -23,8 +25,9 @@ public class Student implements Serializable {
     @Column(name = "name")
     String name;
 
+    @ToString.Exclude
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "group_id")
-    @JsonBackReference
     Group groupEntity;
 }

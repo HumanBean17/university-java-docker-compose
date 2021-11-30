@@ -26,10 +26,15 @@ public class Group implements Serializable {
     @Column(name = "group_code", nullable = false)
     String groupCode;
 
+    @ToString.Exclude
+    @OneToMany(targetEntity = Schedule.class)
+    Set<Schedule> schedules = new HashSet<>();
+
+    @ToString.Exclude
     @OneToMany(targetEntity = Student.class, cascade = CascadeType.ALL)
-    @JsonManagedReference
     Set<Student> students = new HashSet<>();
 
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "speciality_id")
     Speciality speciality;

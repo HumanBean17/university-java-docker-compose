@@ -18,8 +18,8 @@ public class Visit implements Serializable {
     @Id
     @Column(name = "id")
     UUID id;
-    @Column(name = "is_visit")
-    boolean isVisit;
+    @Column(name = "visited")
+    boolean visited;
 
     @OneToOne
     @JoinColumn(name = "schedule_id")

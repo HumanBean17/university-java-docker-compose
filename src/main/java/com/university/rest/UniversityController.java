@@ -22,9 +22,9 @@ public class UniversityController {
 
     private final UniversityService universityService;
 
-    @PostMapping(value = "/labOneQuery", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Student> labOneQuery(@RequestBody FindStudentsDTO findStudentsDTO) {
-        return universityService.labOneQuery(findStudentsDTO.getLecturePhrase());
+    @PostMapping(value = "/labOneQuery", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public LabOneDTO labOneQuery(@RequestBody FindStudentsDTO findStudentsDTO) {
+        return universityService.labOneQuery(findStudentsDTO);
     }
 
     @GetMapping(value = "/labOneData")

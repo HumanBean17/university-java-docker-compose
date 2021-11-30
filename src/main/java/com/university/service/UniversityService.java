@@ -1,6 +1,9 @@
 package com.university.service;
 
+import com.university.dto.FindStudentsDTO;
+import com.university.dto.LabOneDTO;
 import com.university.dto.LectureDTO;
+import com.university.dto.StudentDTO;
 import com.university.entity.*;
 import com.university.mapper.LectureMapper;
 import com.university.repository.*;
@@ -17,9 +20,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.elasticsearch.index.query.QueryBuilders.matchPhraseQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 
 @Service
@@ -38,58 +43,114 @@ public class UniversityService {
     private final GroupRepository groupRepository;
     private final VisitRepository visitRepository;
     private final ScheduleRepository scheduleRepository;
+    private final StudentRepository studentRepository;
 
     @Transactional(readOnly = true)
-    public List<Student> labOneQuery(String lecturePhrase) {
-        List<LectureText> lectures = findByTextEntry(lecturePhrase);
+    public LabOneDTO labOneQuery(FindStudentsDTO findStudentsDTO) {
+        List<LectureText> lectures = findByTextEntry(findStudentsDTO.getLecturePhrase());
 
         List<Schedule> schedules = new LinkedList<>();
         List<Visit> visits = new LinkedList<>();
         List<Student> students = new LinkedList<>();
 
         for (LectureText lectureText : lectures) {
-            schedules.addAll(scheduleRepository.findByLectureId(UUID.fromString(lectureText.getId())));
+            schedules.addAll(scheduleRepository.findByLectureIdAndDateBetween(
+                    UUID.fromString(lectureText.getId()),
+                    findStudentsDTO.getFrom(),
+                    findStudentsDTO.getTo()));
         }
 
         for (Schedule schedule : schedules) {
             visits.addAll(visitRepository.findAllByScheduleId(schedule.getId()));
         }
 
+        Map<String, Integer> visited = new HashMap<>();
+        Map<String, Integer> unvisited = new HashMap<>();
+        SortedMap<String, Integer> percentVisit = new TreeMap<>();
         for (Visit visit : visits) {
-            students.add(visit.getStudent());
+            String id = visit.getStudent().getId();
+            if (visit.isVisited()) {
+                visited.put(id, visited.get(id) == null ? 1 : visited.get(id) + 1);
+            } else {
+                unvisited.put(id, unvisited.get(id) == null ? 1 : unvisited.get(id) + 1);
+            }
+        }
+        for (Map.Entry<String, Integer> elem : unvisited.entrySet()) {
+            if (visited.get(elem.getKey()) != null) {
+                percentVisit.put(elem.getKey(), elem.getValue() * 100 / (elem.getValue() + visited.get(elem.getKey())));
+            } else {
+                percentVisit.put(elem.getKey(), 0);
+            }
+        }
+        for (Map.Entry<String, Integer> elem : visited.entrySet()) {
+            if (unvisited.get(elem.getKey()) != null) {
+                percentVisit.put(elem.getKey(), elem.getValue() * 100 / (elem.getValue() + unvisited.get(elem.getKey())));
+            } else {
+                percentVisit.put(elem.getKey(), 100);
+            }
         }
 
-        return students;
+        LabOneDTO result = new LabOneDTO();
+        Set<Map.Entry<String, Integer>> set = Utils.entriesSortedByValues(percentVisit);
+        int i = 0;
+        for (Map.Entry<String, Integer> elem : set) {
+            result.getStudents().add(
+                    new StudentDTO(elem.getKey(), studentRepository.findById(elem.getKey()).get().getName(), elem.getValue()));
+            if (i >= findStudentsDTO.getNumber()) {
+                break;
+            }
+            i++;
+        }
+        result.setFrom(findStudentsDTO.getFrom());
+        result.setTo(findStudentsDTO.getTo());
+        result.setPhrase(findStudentsDTO.getLecturePhrase());
+        return result;
     }
 
     @Transactional
     public String labOneData() {
         // Saving Group with Students
         Set<Student> students = new HashSet<>();
-        for (int i = 0; i < 30; i++) {
-            students.add(Utils.getRandomStudent(null));
+        Set<Group> groups = new HashSet<>();
+
+        for (int i = 0; i < 3; i++) {
+            Set<Student> tmpStudents = new HashSet<>();
+            for (int j = 0; j < 30; j++) {
+                tmpStudents.add(Utils.getRandomStudent(null));
+            }
+            students.addAll(tmpStudents);
+            Group group = Utils.getRandomGroup(tmpStudents);
+            groups.add(group);
+            saveGroup(group);
         }
-        Group group = Utils.getRandomGroup(students);
-        HashSet<Group> groups = new HashSet<>();
-        groups.add(group);
-        saveGroup(group);
 
         // Saving Lecture
-        LectureDTO lecture = Utils.getRandomLecture(null);
         HashSet<LectureDTO> lectures = new HashSet<>();
+        LectureDTO lecture = Utils.getRandomLecture(null);
         lectures.add(lecture);
         saveLecture(lecture);
 
-        // Saving Schedule
         Schedule schedule = Utils.getRandomSchedule(lecture, groups);
         saveSchedule(schedule);
 
-        // Saving visit
         for (Student student : students) {
             Visit visit = Utils.getRandomVisit(schedule, student);
             saveVisit(visit);
         }
-        return lecture.getText();
+
+        lectures = new HashSet<>();
+        lecture = Utils.getRandomLecture(null);
+        lectures.add(lecture);
+        saveLecture(lecture);
+
+        schedule = Utils.getRandomSchedule(lecture, groups);
+        saveSchedule(schedule);
+
+        for (Student student : students) {
+            Visit visit = Utils.getRandomVisit(schedule, student);
+            saveVisit(visit);
+        }
+        return "ok";
     }
 
     /***
@@ -115,7 +176,7 @@ public class UniversityService {
     @Transactional(readOnly = true)
     public List<LectureText> findByTextEntry(String textEntry) {
         NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(matchQuery("text", textEntry))
+                .withQuery(matchPhraseQuery("text", textEntry))
                 .build();
         return elasticsearchRestTemplate.search(searchQuery, LectureText.class)
                 .getSearchHits()

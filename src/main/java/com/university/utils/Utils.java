@@ -6,7 +6,6 @@ import com.university.mapper.LectureMapper;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Utils {
 
@@ -15,7 +14,7 @@ public class Utils {
     public static Visit getRandomVisit(Schedule schedule, Student student) {
         Visit visit = new Visit();
         visit.setId(UUID.randomUUID());
-        visit.setVisit(rand.nextBoolean());
+        visit.setVisited(rand.nextBoolean());
         visit.setSchedule(schedule);
         visit.setStudent(student);
         return visit;
@@ -54,5 +53,18 @@ public class Utils {
         student.setName(Data.NAMES.get(rand.nextInt(Data.NAMES.size())));
         student.setGroupEntity(group);
         return student;
+    }
+
+    public static <K,V extends Comparable<? super V>> SortedSet<Map.Entry<K,V>> entriesSortedByValues(Map<K,V> map) {
+        SortedSet<Map.Entry<K,V>> sortedEntries = new TreeSet<Map.Entry<K,V>>(
+                new Comparator<Map.Entry<K,V>>() {
+                    @Override public int compare(Map.Entry<K,V> e1, Map.Entry<K,V> e2) {
+                        int res = e1.getValue().compareTo(e2.getValue());
+                        return res != 0 ? res : 1;
+                    }
+                }
+        );
+        sortedEntries.addAll(map.entrySet());
+        return sortedEntries;
     }
 }

@@ -44,7 +44,10 @@ POST http://localhost:8080/api/labOneQuery
 Content-Type: application/json
 
 {
-  "lecturePhrase": ""
+  "lecturePhrase": "Современное состояние",
+  "from": "2021-11-01T15:53:16",
+  "to": "2021-12-31T15:53:16",
+  "number": 100
 }
 
 ###
