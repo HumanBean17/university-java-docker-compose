@@ -9,23 +9,18 @@ import com.university.mapper.LectureMapper;
 import com.university.repository.*;
 import com.university.utils.Utils;
 import lombok.RequiredArgsConstructor;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHit;
-import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.elasticsearch.index.query.QueryBuilders.matchPhraseQuery;
-import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 
 @Service
 @RequiredArgsConstructor
@@ -44,6 +39,7 @@ public class UniversityService {
     private final VisitRepository visitRepository;
     private final ScheduleRepository scheduleRepository;
     private final StudentRepository studentRepository;
+    private final SubjectRepository subjectRepository;
 
     @Transactional(readOnly = true)
     public LabOneDTO labOneQuery(FindStudentsDTO findStudentsDTO) {
@@ -112,7 +108,6 @@ public class UniversityService {
         // Saving Group with Students
         Set<Student> students = new HashSet<>();
         Set<Group> groups = new HashSet<>();
-
         for (int i = 0; i < 3; i++) {
             Set<Student> tmpStudents = new HashSet<>();
             for (int j = 0; j < 30; j++) {
@@ -124,31 +119,41 @@ public class UniversityService {
             saveGroup(group);
         }
 
-        // Saving Lecture
-        HashSet<LectureDTO> lectures = new HashSet<>();
-        LectureDTO lecture = Utils.getRandomLecture(null);
-        lectures.add(lecture);
-        saveLecture(lecture);
+        // Saving Subjects
+        Subject bigDockerSubj = new Subject();
+        bigDockerSubj.setId(UUID.randomUUID());
+        bigDockerSubj.setName("Принципы построения, проектирования и эксплуатации информационных систем");
+        subjectRepository.save(bigDockerSubj);
+        Subject linuxSubj = new Subject();
+        linuxSubj.setId(UUID.randomUUID());
+        linuxSubj.setName("Основы администрирования программно-аппаратных комплексов под управлением ОС Linux");
+        subjectRepository.save(linuxSubj);
 
-        Schedule schedule = Utils.getRandomSchedule(lecture, groups);
-        saveSchedule(schedule);
+        // Saving Lecture and Schedules
+        HashSet<LectureDTO> lectures = Utils.getLectures(bigDockerSubj, linuxSubj);
+        int month = 1;
+        int day = 8;
+        LocalDateTime dateTime = LocalDateTime.of(2021, month, day, 9, 0, 0, 0);
+        for (LectureDTO elem : lectures) {
+            saveLecture(elem);
 
-        for (Student student : students) {
-            Visit visit = Utils.getRandomVisit(schedule, student);
-            saveVisit(visit);
-        }
+            Schedule schedule = new Schedule();
+            schedule.setId(UUID.randomUUID());
+            schedule.setLecture(LectureMapper.dtoToPostgreEntity(elem));
+            schedule.setGroups(groups);
+            schedule.setDate(dateTime);
+            day += 10;
+            if (day >= 28) {
+                month += 1;
+                day = 8;
+            }
+            dateTime = LocalDateTime.of(2021, month, day, 9, 0, 0, 0);
+            saveSchedule(schedule);
 
-        lectures = new HashSet<>();
-        lecture = Utils.getRandomLecture(null);
-        lectures.add(lecture);
-        saveLecture(lecture);
-
-        schedule = Utils.getRandomSchedule(lecture, groups);
-        saveSchedule(schedule);
-
-        for (Student student : students) {
-            Visit visit = Utils.getRandomVisit(schedule, student);
-            saveVisit(visit);
+            for (Student student : students) {
+                Visit visit = Utils.getRandomVisit(schedule, student);
+                saveVisit(visit);
+            }
         }
         return "ok";
     }

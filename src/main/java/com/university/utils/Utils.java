@@ -20,13 +20,26 @@ public class Utils {
         return visit;
     }
 
-    public static LectureDTO getRandomLecture(Subject subject) {
-        LectureDTO lecture = new LectureDTO();
-        lecture.setId(UUID.randomUUID());
-        lecture.setName(UUID.randomUUID().toString().substring(0, 8).toUpperCase(Locale.ROOT));
-        lecture.setText(Data.BUILD_PROECT_USE_INF_SYS_LECTURES.get(0)); //TODO
-        lecture.setSubject(subject);
-        return lecture;
+    public static HashSet<LectureDTO> getLectures(Subject bigDockerSubj, Subject linuxSubj) {
+        HashSet<LectureDTO> lectures = new HashSet<>();
+        LectureDTO lecture;
+        for (String elem : Data.BIG_DOCKER_LECTURES) {
+            lecture = new LectureDTO();
+            lecture.setId(UUID.randomUUID());
+            lecture.setName(UUID.randomUUID().toString().substring(0, 8).toUpperCase(Locale.ROOT));
+            lecture.setText(elem);
+            lecture.setSubject(bigDockerSubj);
+            lectures.add(lecture);
+        }
+        for (String elem : Data.LINUX_LECTURES) {
+            lecture = new LectureDTO();
+            lecture.setId(UUID.randomUUID());
+            lecture.setName(UUID.randomUUID().toString().substring(0, 8).toUpperCase(Locale.ROOT));
+            lecture.setText(elem);
+            lecture.setSubject(linuxSubj);
+            lectures.add(lecture);
+        }
+        return lectures;
     }
 
     public static Schedule getRandomSchedule(LectureDTO lectureDTO, Set<Group> groups) {
