@@ -14,8 +14,9 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString//(exclude = "groupEntity")
+@ToString
 @Entity
+@RedisHash(value = "student")
 @Table(name = "student")
 public class Student implements Serializable {
 

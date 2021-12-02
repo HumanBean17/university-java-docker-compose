@@ -11,5 +11,6 @@ public class StudentDTO {
 
     String id;
     String name;
+    String group;
     Integer visitPercentage;
 }

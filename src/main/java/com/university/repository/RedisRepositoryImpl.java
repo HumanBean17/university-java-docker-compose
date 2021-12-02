@@ -14,11 +14,11 @@ import java.util.UUID;
 public class RedisRepositoryImpl implements RedisRepository {
 
     private static final String STUDENT_KEY = "student";
-    private final RedisTemplate<String, Object> redisTemplate;
-    private HashOperations<String, String, Object> hashOperations;
+    private final RedisTemplate<String, Student> redisTemplate;
+    private HashOperations<String, String, Student> hashOperations;
 
     @Autowired
-    public RedisRepositoryImpl(RedisTemplate<String, Object> redisTemplate){
+    public RedisRepositoryImpl(RedisTemplate<String, Student> redisTemplate){
         this.redisTemplate = redisTemplate;
     }
 
@@ -29,7 +29,7 @@ public class RedisRepositoryImpl implements RedisRepository {
 
     @Override
     public void save(final Student student) {
-        hashOperations.put(STUDENT_KEY, student.getId(), student.getName());
+        hashOperations.put(STUDENT_KEY, student.getId(), student);
     }
 
     @Override
@@ -38,12 +38,12 @@ public class RedisRepositoryImpl implements RedisRepository {
     }
 
     @Override
-    public Student findStudentById(final UUID id){
-        return (Student) hashOperations.get(STUDENT_KEY, id);
+    public Student findStudentById(final String id){
+        return hashOperations.get(STUDENT_KEY, id);
     }
 
     @Override
-    public Map<String, Object> findAllStudents(){
+    public Map<String, Student> findAllStudents(){
         return hashOperations.entries(STUDENT_KEY);
     }
 }

@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public interface RedisRepository {
-    Map<String, Object> findAllStudents();
+    Map<String, Student> findAllStudents();
     void save(Student student);
     void delete(String id);
-    Student findStudentById(UUID id);
+    Student findStudentById(String id);
 }

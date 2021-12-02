@@ -38,7 +38,8 @@ public class UniversityService {
     private final GroupRepository groupRepository;
     private final VisitRepository visitRepository;
     private final ScheduleRepository scheduleRepository;
-    private final StudentRepository studentRepository;
+//    private final StudentRepository studentRepository;
+//    private final StudentHashRepository studentHashRepository;
     private final SubjectRepository subjectRepository;
 
     @Transactional(readOnly = true)
@@ -90,8 +91,10 @@ public class UniversityService {
         Set<Map.Entry<String, Integer>> set = Utils.entriesSortedByValues(percentVisit);
         int i = 0;
         for (Map.Entry<String, Integer> elem : set) {
+//            System.out.println(redisRepository.findStudentById(elem.getKey()));
+            Student student = redisRepository.findStudentById(elem.getKey());
             result.getStudents().add(
-                    new StudentDTO(elem.getKey(), studentRepository.findById(elem.getKey()).get().getName(), elem.getValue()));
+                    new StudentDTO(student.getId(), student.getName(), student.getGroupEntity().getGroupCode(), elem.getValue()));
             if (i >= findStudentsDTO.getNumber()) {
                 break;
             }
@@ -214,7 +217,7 @@ public class UniversityService {
     }
 
     @Transactional(readOnly = true)
-    public Map<String, Object> getAllStudents() {
+    public Map<String, Student> getAllStudents() {
         return redisRepository.findAllStudents();
     }
 
@@ -224,6 +227,10 @@ public class UniversityService {
      */
     @Transactional
     public Group saveGroup(Group group) {
+        group = groupRepository.save(group);
+        for (Student student : group.getStudents()) {
+            redisRepository.save(student);
+        }
         return groupRepository.save(group);
     }
 
