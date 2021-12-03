@@ -1,5 +1,6 @@
 package com.university.dto;
 
+import com.university.entity.Group;
 import lombok.*;
 
 @Getter
@@ -11,6 +12,6 @@ public class StudentDTO {
 
     String id;
     String name;
-    String group;
+    Group group;
     Integer visitPercentage;
 }

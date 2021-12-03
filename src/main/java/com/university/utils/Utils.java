@@ -1,6 +1,7 @@
 package com.university.utils;
 
 import com.university.dto.LectureDTO;
+import com.university.dto.StudentDTO;
 import com.university.entity.*;
 import com.university.mapper.LectureMapper;
 
@@ -11,11 +12,14 @@ public class Utils {
 
     public static final Random rand = new Random();
 
-    public static Visit getRandomVisit(Schedule schedule, Student student) {
+    public static Visit getRandomVisit(Schedule schedule, StudentDTO studentDTO) {
         Visit visit = new Visit();
         visit.setId(UUID.randomUUID());
         visit.setVisited(rand.nextBoolean());
         visit.setSchedule(schedule);
+        Student student = new Student();
+        student.setId(studentDTO.getId());
+        student.setGroupEntity(studentDTO.getGroup());
         visit.setStudent(student);
         return visit;
     }
@@ -51,20 +55,23 @@ public class Utils {
         return schedule;
     }
 
-    public static Group getRandomGroup(Set<Student> students) {
+    public static Group getRandomGroup(Set<StudentDTO> students) {
         Group group = new Group();
         group.setId(UUID.randomUUID());
         group.setGroupCode(UUID.randomUUID().toString().substring(0, 8).toUpperCase(Locale.ROOT));
-        group.setStudents(students);
-        students.forEach(student -> student.setGroupEntity(group));
+        for (StudentDTO studentDTO : students) {
+            Student student = new Student(studentDTO.getId(), studentDTO.getGroup());
+            group.getStudents().add(student);
+        }
+        students.forEach(student -> student.setGroup(group));
         return group;
     }
 
-    public static Student getRandomStudent(Group group) {
-        Student student = new Student();
+    public static StudentDTO getRandomStudent(Group group) {
+        StudentDTO student = new StudentDTO();
         student.setId(UUID.randomUUID().toString());
         student.setName(Data.NAMES.get(rand.nextInt(Data.NAMES.size())));
-        student.setGroupEntity(group);
+        student.setGroup(group);
         return student;
     }
 

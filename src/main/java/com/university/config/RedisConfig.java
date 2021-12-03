@@ -1,6 +1,7 @@
 package com.university.config;
 
 import com.university.entity.Student;
+import com.university.entity.StudentHash;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -16,8 +17,8 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisTemplate<String, Student> redisTemplate() {
-        RedisTemplate<String, Student> template = new RedisTemplate<>();
+    public RedisTemplate<String, StudentHash> redisTemplate() {
+        RedisTemplate<String, StudentHash> template = new RedisTemplate<>();
         template.setConnectionFactory(jedisConnectionFactory());
         return template;
     }

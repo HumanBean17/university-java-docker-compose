@@ -63,12 +63,12 @@ public class UniversityController {
      * STUDENT API
      */
     @PostMapping(value = "/addStudent", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addStudent(@RequestBody Student student) {
+    public ResponseEntity<String> addStudent(@RequestBody StudentHash student) {
         universityService.saveStudent(student);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping(value = "/getAllStudents", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, Student> getAllStudents() {
+    public Map<String, StudentHash> getAllStudents() {
         return universityService.getAllStudents();
     }
 
@@ -76,12 +76,12 @@ public class UniversityController {
      *
      * GROUP API
      */
-    @GetMapping(value = "/saveRandomGroup", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Group saveRandomGroup() {
-        return universityService.saveGroup(getRandomGroup(new HashSet<Student>() {{
-            add(getRandomStudent(null));
-        }}));
-    }
+//    @GetMapping(value = "/saveRandomGroup", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public Group saveRandomGroup() {
+//        return universityService.saveGroup(getRandomGroup(new HashSet<Student>() {{
+//            add(getRandomStudent(null));
+//        }}));
+//    }
     @GetMapping(value = "/getAllGroups", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Group> getAllGroups() {
         return universityService.getAllGroups();

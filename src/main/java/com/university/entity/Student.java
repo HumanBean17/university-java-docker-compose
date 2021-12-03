@@ -16,15 +16,12 @@ import java.util.UUID;
 @AllArgsConstructor
 @ToString
 @Entity
-@RedisHash(value = "student")
 @Table(name = "student")
 public class Student implements Serializable {
 
     @Id
     @Column(name = "id")
     String id;
-    @Column(name = "name")
-    String name;
 
     @ToString.Exclude
     @JsonIgnore
