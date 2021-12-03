@@ -29,9 +29,12 @@ public class UniversityService {
     private final ElasticsearchRestTemplate elasticsearchRestTemplate;
 
     // Elastic
-    private final LectureTextRepository lectureTextRepository;
+    private final LectureElasticRepository lectureElasticRepository;
     // Redis
     private final RedisRepository redisRepository;
+    // Mongo
+    private final GroupMongoRepository groupMongoRepository;
+    private final StudentMongoRepository studentMongoRepository;
 
     // Postgres
     private final LectureRepository lectureRepository;
@@ -43,15 +46,15 @@ public class UniversityService {
 
     @Transactional(readOnly = true)
     public LabOneDTO labOneQuery(FindStudentsDTO findStudentsDTO) {
-        List<LectureText> lectures = findByTextEntry(findStudentsDTO.getLecturePhrase());
+        List<LectureElastic> lectures = findByTextEntry(findStudentsDTO.getLecturePhrase());
 
         List<Schedule> schedules = new LinkedList<>();
         List<Visit> visits = new LinkedList<>();
         List<Student> students = new LinkedList<>();
 
-        for (LectureText lectureText : lectures) {
+        for (LectureElastic lectureElastic : lectures) {
             schedules.addAll(scheduleRepository.findByLectureIdAndDateBetween(
-                    UUID.fromString(lectureText.getId()),
+                    UUID.fromString(lectureElastic.getId()),
                     findStudentsDTO.getFrom(),
                     findStudentsDTO.getTo()));
         }
@@ -90,11 +93,10 @@ public class UniversityService {
         Set<Map.Entry<String, Integer>> set = Utils.entriesSortedByValues(percentVisit);
         int i = 0;
         for (Map.Entry<String, Integer> elem : set) {
-//            System.out.println(redisRepository.findStudentById(elem.getKey()));
             Student student = studentRepository.findById(elem.getKey()).get();
-            StudentHash studentHash = redisRepository.findStudentById(elem.getKey());
+            StudentRedis studentRedis = redisRepository.findStudentById(elem.getKey());
             result.getStudents().add(
-                    new StudentDTO(student.getId(), studentHash.getName(), student.getGroupEntity(), elem.getValue()));
+                    new StudentDTO(student.getId(), studentRedis.getName(), student.getGroupEntity(), elem.getValue()));
             if (i >= findStudentsDTO.getNumber()) {
                 break;
             }
@@ -124,8 +126,7 @@ public class UniversityService {
                 tmpStudents.add(studentDTO);
                 group.getStudents().add(student);
 
-                studentRepository.save(student);
-                redisRepository.save(new StudentHash(studentDTO.getId(), studentDTO.getName()));
+                saveStudent(studentDTO);
             }
             students.addAll(tmpStudents);
             groups.add(group);
@@ -192,11 +193,11 @@ public class UniversityService {
      * LECTURE
      */
     @Transactional(readOnly = true)
-    public List<LectureText> findByTextEntry(String textEntry) {
+    public List<LectureElastic> findByTextEntry(String textEntry) {
         NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(matchPhraseQuery("text", textEntry))
                 .build();
-        return elasticsearchRestTemplate.search(searchQuery, LectureText.class)
+        return elasticsearchRestTemplate.search(searchQuery, LectureElastic.class)
                 .getSearchHits()
                 .stream()
                 .map(SearchHit::getContent).collect(Collectors.toList());
@@ -205,15 +206,15 @@ public class UniversityService {
     @Transactional
     public void saveLecture(LectureDTO dto) {
         Lecture lecture = new Lecture(dto.getId(), dto.getName(), dto.getSubject());
-        LectureText lectureText = new LectureText(dto.getId().toString(), dto.getText());
+        LectureElastic lectureElastic = new LectureElastic(dto.getId().toString(), dto.getText());
         lectureRepository.save(lecture);
-        lectureTextRepository.save(lectureText);
+        lectureElasticRepository.save(lectureElastic);
     }
 
     @Transactional(readOnly = true)
-    public List<LectureText> getAllLectures() {
-        List<LectureText> lst = new ArrayList<>();
-        lectureTextRepository.findAll().forEach(lst::add);
+    public List<LectureElastic> getAllLectures() {
+        List<LectureElastic> lst = new ArrayList<>();
+        lectureElasticRepository.findAll().forEach(lst::add);
         return lst;
     }
 
@@ -222,12 +223,14 @@ public class UniversityService {
      * STUDENT
      */
     @Transactional
-    public void saveStudent(StudentHash student) {
-        redisRepository.save(student);
+    public void saveStudent(StudentDTO student) {
+        studentRepository.save(new Student(student.getId(), student.getGroup()));
+        redisRepository.save(new StudentRedis(student.getId(), student.getName()));
+        studentMongoRepository.save(new StudentMongo(student.getId(), student.getName()));
     }
 
     @Transactional(readOnly = true)
-    public Map<String, StudentHash> getAllStudents() {
+    public Map<String, StudentRedis> getAllStudents() {
         return redisRepository.findAllStudents();
     }
 
@@ -236,13 +239,34 @@ public class UniversityService {
      * GROUP
      */
     @Transactional
-    public Group saveGroup(Group group) {
-        group = groupRepository.save(group);
+    public void saveGroup(Group group) {
+        Set<StudentMongo> studentMongos = new HashSet<>();
+        for (Student student : group.getStudents()) {
+            studentMongos.add(new StudentMongo(student.getId(), student.getGroupEntity().getGroupCode()));
+        }
+        groupMongoRepository.save(new GroupMongo(group.getId(), group.getGroupCode(), studentMongos));
+        groupRepository.save(group);
+    }
+
+    @Transactional(readOnly = true)
+    public List<GroupMongo> getAllGroupsMongo() {
+        return groupMongoRepository.findAll();
+    }
+
+    @Transactional
+    public Group saveGroup1(Group group) {
+        GroupMongo groupMongo = new GroupMongo(group.getId(), group.getGroupCode(), null);
+        groupMongoRepository.save(groupMongo);
+//        group = groupRepository.save(group);
 //        for (StudentDTO student : studentDTOS) {
 //            StudentHash studentHash = new StudentHash(student.getId(), student.getName());
 //            redisRepository.save(studentHash);
 //        }
         return group;
+    }
+
+    public List<GroupMongo> getAllGroups1() {
+        return groupMongoRepository.findAll();
     }
 
     @Transactional(readOnly = true)

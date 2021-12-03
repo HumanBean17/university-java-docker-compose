@@ -3,6 +3,7 @@ package com.university.rest;
 import com.university.dto.FindStudentsDTO;
 import com.university.dto.LabOneDTO;
 import com.university.dto.LectureDTO;
+import com.university.dto.StudentDTO;
 import com.university.entity.*;
 import com.university.service.UniversityService;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,7 @@ public class UniversityController {
      * LECTURE API
      */
     @PostMapping(value = "/findLectureByTextEntry", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<LectureText> findLectureByTextEntry(@RequestBody FindStudentsDTO dto) {
+    public List<LectureElastic> findLectureByTextEntry(@RequestBody FindStudentsDTO dto) {
         return universityService.findByTextEntry(dto.getLecturePhrase());
     }
     @PostMapping(value = "/addLecture", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -46,7 +47,7 @@ public class UniversityController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping(value = "/getLectures", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<LectureText> getLectures() {
+    public List<LectureElastic> getLectures() {
         return universityService.getAllLectures();
     }
 
@@ -63,12 +64,12 @@ public class UniversityController {
      * STUDENT API
      */
     @PostMapping(value = "/addStudent", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addStudent(@RequestBody StudentHash student) {
+    public ResponseEntity<String> addStudent(@RequestBody StudentDTO student) {
         universityService.saveStudent(student);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping(value = "/getAllStudents", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, StudentHash> getAllStudents() {
+    public Map<String, StudentRedis> getAllStudents() {
         return universityService.getAllStudents();
     }
 
@@ -76,15 +77,32 @@ public class UniversityController {
      *
      * GROUP API
      */
-//    @GetMapping(value = "/saveRandomGroup", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public Group saveRandomGroup() {
-//        return universityService.saveGroup(getRandomGroup(new HashSet<Student>() {{
-//            add(getRandomStudent(null));
-//        }}));
-//    }
+    @GetMapping(value = "/saveRandomGroup", produces = MediaType.APPLICATION_JSON_VALUE)
+    public void saveRandomGroup() {
+        Group group = getRandomGroup();
+        Set<Student> students = new HashSet<>();
+        Set<StudentDTO> studentDTOS = new HashSet<>();
+        for (int i = 0; i < 30; i++) {
+            StudentDTO studentDTO = getRandomStudent(group);
+            students.add(new Student(studentDTO.getId(), studentDTO.getGroup()));
+            studentDTOS.add(studentDTO);
+        }
+        group.getStudents().addAll(students);
+        universityService.saveGroup(group);
+        for (StudentDTO student : studentDTOS) {
+            universityService.saveStudent(student);
+        }
+    }
+
+    @GetMapping(value = "/getAllGroupsMongo", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<GroupMongo> getAllGroupsMongo() {
+        return universityService.getAllGroupsMongo();
+    }
+
     @GetMapping(value = "/getAllGroups", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Group> getAllGroups() {
-        return universityService.getAllGroups();
+    public List<GroupMongo> getAllGroups() {
+        return universityService.getAllGroups1();
+//        return universityService.getAllGroups();
     }
 
 }

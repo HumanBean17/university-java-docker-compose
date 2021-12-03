@@ -21,15 +21,6 @@
 	</properties>
 
 	<dependencies>
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-data-elasticsearch</artifactId>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.elasticsearch</groupId>-->
-<!--			<artifactId>elasticsearch-plugin-classloader</artifactId>-->
-<!--&lt;!&ndash;			<version>7.15.0</version>&ndash;&gt;-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
@@ -39,56 +30,20 @@
 			<artifactId>spring-data-elasticsearch</artifactId>
 			<version>4.3.0</version>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.elasticsearch</groupId>-->
-<!--			<artifactId>elasticsearch</artifactId>-->
-<!--&lt;!&ndash;			<version>7.15.0</version>&ndash;&gt;-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.elasticsearch.client</groupId>-->
-<!--			<artifactId>elasticsearch-rest-high-level-client</artifactId>-->
-<!--&lt;!&ndash;			<version>7.15.0</version>&ndash;&gt;-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.elasticsearch.client</groupId>-->
-<!--			<artifactId>elasticsearch-rest-client</artifactId>-->
-<!--&lt;!&ndash;			<version>7.15.0</version>&ndash;&gt;-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.elasticsearch</groupId>-->
-<!--			<artifactId>elasticsearch-core</artifactId>-->
-<!--&lt;!&ndash;			<version>7.15.0</version>&ndash;&gt;-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.elasticsearch.client</groupId>-->
-<!--			<artifactId>transport</artifactId>-->
-<!--&lt;!&ndash;			<version>7.15.0</version>&ndash;&gt;-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.elasticsearch</groupId>-->
-<!--			<artifactId>elasticsearch-secure-sm</artifactId>-->
-<!--&lt;!&ndash;			<version>7.15.0</version>&ndash;&gt;-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.elasticsearch</groupId>-->
-<!--			<artifactId>elasticsearch-x-content</artifactId>-->
-<!--&lt;!&ndash;			<version>7.15.0</version>&ndash;&gt;-->
-<!--		</dependency>-->
 
-
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-data-mongodb-reactive</artifactId>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-data-neo4j</artifactId>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-redis</artifactId>
@@ -125,10 +80,6 @@
 			<version>1.18.22</version>
 			<scope>provided</scope>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.liquibase</groupId>-->
-<!--			<artifactId>liquibase-core</artifactId>-->
-<!--		</dependency>-->
 	</dependencies>
 
 	<build>

@@ -1,14 +1,12 @@
 package com.university.repository;
 
-import com.university.entity.Student;
-import com.university.entity.StudentHash;
+import com.university.entity.StudentRedis;
 
 import java.util.Map;
-import java.util.UUID;
 
 public interface RedisRepository {
-    Map<String, StudentHash> findAllStudents();
-    void save(StudentHash student);
+    Map<String, StudentRedis> findAllStudents();
+    void save(StudentRedis student);
     void delete(String id);
-    StudentHash findStudentById(String id);
+    StudentRedis findStudentById(String id);
 }

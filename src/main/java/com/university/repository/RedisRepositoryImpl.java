@@ -1,7 +1,6 @@
 package com.university.repository;
 
-import com.university.entity.Student;
-import com.university.entity.StudentHash;
+import com.university.entity.StudentRedis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -9,17 +8,16 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
-import java.util.UUID;
 
 @Repository
 public class RedisRepositoryImpl implements RedisRepository {
 
     private static final String STUDENT_KEY = "student";
-    private final RedisTemplate<String, StudentHash> redisTemplate;
-    private HashOperations<String, String, StudentHash> hashOperations;
+    private final RedisTemplate<String, StudentRedis> redisTemplate;
+    private HashOperations<String, String, StudentRedis> hashOperations;
 
     @Autowired
-    public RedisRepositoryImpl(RedisTemplate<String, StudentHash> redisTemplate){
+    public RedisRepositoryImpl(RedisTemplate<String, StudentRedis> redisTemplate){
         this.redisTemplate = redisTemplate;
     }
 
@@ -29,7 +27,7 @@ public class RedisRepositoryImpl implements RedisRepository {
     }
 
     @Override
-    public void save(final StudentHash student) {
+    public void save(final StudentRedis student) {
         hashOperations.put(STUDENT_KEY, student.getId(), student);
     }
 
@@ -39,12 +37,12 @@ public class RedisRepositoryImpl implements RedisRepository {
     }
 
     @Override
-    public StudentHash findStudentById(final String id){
+    public StudentRedis findStudentById(final String id){
         return hashOperations.get(STUDENT_KEY, id);
     }
 
     @Override
-    public Map<String, StudentHash> findAllStudents(){
+    public Map<String, StudentRedis> findAllStudents(){
         return hashOperations.entries(STUDENT_KEY);
     }
 }

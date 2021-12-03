@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @RedisHash(value = "student")
-public class StudentHash implements Serializable {
+public class StudentRedis implements Serializable {
 
     String id;
     String name;

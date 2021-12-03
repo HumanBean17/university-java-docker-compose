@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @ToString
 @Document(indexName = "lectureindex")
-public class LectureText implements Serializable {
+public class LectureElastic implements Serializable {
 
     @Id
     @Column(name = "id")
