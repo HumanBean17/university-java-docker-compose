@@ -91,7 +91,7 @@ public class UniversityService {
         int i = 0;
         for (Map.Entry<String, Integer> elem : set) {
 //            System.out.println(redisRepository.findStudentById(elem.getKey()));
-            Student student = studentRepository.getById(elem.getKey());
+            Student student = studentRepository.findById(elem.getKey()).get();
             StudentHash studentHash = redisRepository.findStudentById(elem.getKey());
             result.getStudents().add(
                     new StudentDTO(student.getId(), studentHash.getName(), student.getGroupEntity(), elem.getValue()));
@@ -111,15 +111,25 @@ public class UniversityService {
         // Saving Group with Students
         Set<StudentDTO> students = new HashSet<>();
         Set<Group> groups = new HashSet<>();
+
+        Group group = Utils.getRandomGroup();
+        saveGroup(group);
+
         for (int i = 0; i < 3; i++) {
             Set<StudentDTO> tmpStudents = new HashSet<>();
+
             for (int j = 0; j < 30; j++) {
-                tmpStudents.add(Utils.getRandomStudent(null));
+                StudentDTO studentDTO = Utils.getRandomStudent(group);
+                Student student = new Student(studentDTO.getId(), studentDTO.getGroup());
+                tmpStudents.add(studentDTO);
+                group.getStudents().add(student);
+
+                studentRepository.save(student);
+                redisRepository.save(new StudentHash(studentDTO.getId(), studentDTO.getName()));
             }
             students.addAll(tmpStudents);
-            Group group = Utils.getRandomGroup(tmpStudents);
             groups.add(group);
-            saveGroup(group, tmpStudents);
+
         }
 
         // Saving Subjects
@@ -226,13 +236,13 @@ public class UniversityService {
      * GROUP
      */
     @Transactional
-    public Group saveGroup(Group group, Set<StudentDTO> studentDTOS) {
+    public Group saveGroup(Group group) {
         group = groupRepository.save(group);
-        for (StudentDTO student : studentDTOS) {
-            StudentHash studentHash = new StudentHash(student.getId(), student.getName());
-            redisRepository.save(studentHash);
-        }
-        return groupRepository.save(group);
+//        for (StudentDTO student : studentDTOS) {
+//            StudentHash studentHash = new StudentHash(student.getId(), student.getName());
+//            redisRepository.save(studentHash);
+//        }
+        return group;
     }
 
     @Transactional(readOnly = true)

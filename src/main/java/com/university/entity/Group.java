@@ -1,5 +1,6 @@
 package com.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -27,15 +28,18 @@ public class Group implements Serializable {
     String groupCode;
 
     @ToString.Exclude
+    @JsonIgnore
     @OneToMany(targetEntity = Schedule.class)
     Set<Schedule> schedules = new HashSet<>();
 
     @ToString.Exclude
+    @JsonIgnore
     @OneToMany(targetEntity = Student.class, cascade = CascadeType.ALL)
     Set<Student> students = new HashSet<>();
 
     @ToString.Exclude
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "speciality_id")
     Speciality speciality;
 
