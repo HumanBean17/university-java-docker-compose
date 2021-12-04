@@ -59,11 +59,6 @@ public class Utils {
         Group group = new Group();
         group.setId(UUID.randomUUID());
         group.setGroupCode(UUID.randomUUID().toString().substring(0, 8).toUpperCase(Locale.ROOT));
-//        for (StudentDTO studentDTO : students) {
-//            Student student = new Student(studentDTO.getId(), studentDTO.getGroup());
-//            group.getStudents().add(student);
-//        }
-//        students.forEach(student -> student.setGroup(group));
         return group;
     }
 

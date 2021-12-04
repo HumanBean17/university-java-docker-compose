@@ -23,6 +23,7 @@ public class Course implements Serializable {
     @Column(name = "hours")
     long hours;
 
-    @OneToMany(targetEntity = Speciality.class)
+    @ToString.Exclude
+    @OneToMany(targetEntity = Speciality.class, cascade = CascadeType.ALL)
     Set<Speciality> specialities = new HashSet<>();
 }

@@ -68,7 +68,7 @@ public class UniversityController {
         universityService.saveStudent(student);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @GetMapping(value = "/getAllStudents", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getAllStudentsRedis", produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, StudentRedis> getAllStudents() {
         return universityService.getAllStudents();
     }
@@ -101,7 +101,7 @@ public class UniversityController {
 
     @GetMapping(value = "/getAllGroups", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<GroupMongo> getAllGroups() {
-        return universityService.getAllGroups1();
+        return universityService.getAllGroupsMongo();
 //        return universityService.getAllGroups();
     }
 

@@ -1,1 +1,6 @@
 FLUSHALL
+
+db.groupMongo.find()
+db.groupMongo.deleteMany({})
+
+curl -XDELETE 'localhost:9200/lectureindex/

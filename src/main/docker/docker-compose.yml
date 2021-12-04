@@ -1,5 +1,12 @@
 version: '2'
 services:
+  neo4j:
+    image: neo4j:latest
+    container_name: neo4j
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+
   mongo:
     image: mongo:latest
     container_name: mongo
@@ -12,10 +19,10 @@ services:
     image: redis:alpine
     container_name: redis
     hostname: redis
-    volumes:
-      - db_data:/var/lib/redis/data/
     ports:
       - "6379:6379"
+    volumes:
+      - db_data:/var/lib/redis/data/
 
   elastic:
     image: elasticsearch:7.14.2

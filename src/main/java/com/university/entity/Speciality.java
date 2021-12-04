@@ -21,4 +21,7 @@ public class Speciality implements Serializable {
     @Id
     @Column(name = "id")
     UUID id;
+
+    @Column(name = "name")
+    String name;
 }

@@ -43,6 +43,8 @@ public class UniversityService {
     private final ScheduleRepository scheduleRepository;
     private final StudentRepository studentRepository;
     private final SubjectRepository subjectRepository;
+    private final CourseRepository courseRepository;
+    private final SpecialityRepository specialityRepository;
 
     @Transactional(readOnly = true)
     public LabOneDTO labOneQuery(FindStudentsDTO findStudentsDTO) {
@@ -96,7 +98,7 @@ public class UniversityService {
             Student student = studentRepository.findById(elem.getKey()).get();
             StudentRedis studentRedis = redisRepository.findStudentById(elem.getKey());
             result.getStudents().add(
-                    new StudentDTO(student.getId(), studentRedis.getName(), student.getGroupEntity(), elem.getValue()));
+                    new StudentDTO(student.getId(), studentRedis.getName(), student.getGroupEntity(), student.getGroupEntity().getSpeciality(), elem.getValue()));
             if (i >= findStudentsDTO.getNumber()) {
                 break;
             }
@@ -110,14 +112,39 @@ public class UniversityService {
 
     @Transactional
     public String labOneData() {
+        // Saving Specialities and Course
+        Set<Speciality> specialities = new HashSet<>();
+        Speciality speciality = new Speciality();
+        speciality.setId(UUID.randomUUID());
+        speciality.setName("Информационные системы и технологии");
+        specialities.add(speciality);
+
+        Course course = new Course();
+        course.setId(UUID.randomUUID());
+        course.setHours(90);
+        course.setSpecialities(specialities);
+        courseRepository.save(course);
+
+        // Saving Subjects
+        Subject bigDockerSubj = new Subject();
+        bigDockerSubj.setCourse(course);
+        bigDockerSubj.setId(UUID.randomUUID());
+        bigDockerSubj.setName("Принципы построения, проектирования и эксплуатации информационных систем");
+        subjectRepository.save(bigDockerSubj);
+        Subject linuxSubj = new Subject();
+        linuxSubj.setCourse(course);
+        linuxSubj.setId(UUID.randomUUID());
+        linuxSubj.setName("Основы администрирования программно-аппаратных комплексов под управлением ОС Linux");
+        subjectRepository.save(linuxSubj);
+
         // Saving Group with Students
         Set<StudentDTO> students = new HashSet<>();
         Set<Group> groups = new HashSet<>();
 
-        Group group = Utils.getRandomGroup();
-        saveGroup(group);
-
         for (int i = 0; i < 3; i++) {
+            Group group = Utils.getRandomGroup();
+            group.setSpeciality(speciality);
+            saveGroup(group);
             Set<StudentDTO> tmpStudents = new HashSet<>();
 
             for (int j = 0; j < 30; j++) {
@@ -132,16 +159,6 @@ public class UniversityService {
             groups.add(group);
 
         }
-
-        // Saving Subjects
-        Subject bigDockerSubj = new Subject();
-        bigDockerSubj.setId(UUID.randomUUID());
-        bigDockerSubj.setName("Принципы построения, проектирования и эксплуатации информационных систем");
-        subjectRepository.save(bigDockerSubj);
-        Subject linuxSubj = new Subject();
-        linuxSubj.setId(UUID.randomUUID());
-        linuxSubj.setName("Основы администрирования программно-аппаратных комплексов под управлением ОС Linux");
-        subjectRepository.save(linuxSubj);
 
         // Saving Lecture and Schedules
         HashSet<LectureDTO> lectures = Utils.getLectures(bigDockerSubj, linuxSubj);
@@ -250,22 +267,6 @@ public class UniversityService {
 
     @Transactional(readOnly = true)
     public List<GroupMongo> getAllGroupsMongo() {
-        return groupMongoRepository.findAll();
-    }
-
-    @Transactional
-    public Group saveGroup1(Group group) {
-        GroupMongo groupMongo = new GroupMongo(group.getId(), group.getGroupCode(), null);
-        groupMongoRepository.save(groupMongo);
-//        group = groupRepository.save(group);
-//        for (StudentDTO student : studentDTOS) {
-//            StudentHash studentHash = new StudentHash(student.getId(), student.getName());
-//            redisRepository.save(studentHash);
-//        }
-        return group;
-    }
-
-    public List<GroupMongo> getAllGroups1() {
         return groupMongoRepository.findAll();
     }
 
