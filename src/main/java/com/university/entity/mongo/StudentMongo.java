@@ -1,4 +1,4 @@
-package com.university.entity;
+package com.university.entity.mongo;
 
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;

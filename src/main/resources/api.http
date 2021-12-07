@@ -54,3 +54,5 @@ Content-Type: application/json
 }
 
 ###
+
+GET http://localhost:8080/api/labOneData_V2

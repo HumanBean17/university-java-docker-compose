@@ -5,6 +5,9 @@ import com.university.dto.LabOneDTO;
 import com.university.dto.LectureDTO;
 import com.university.dto.StudentDTO;
 import com.university.entity.*;
+import com.university.entity.elastic.LectureElastic;
+import com.university.entity.mongo.GroupMongo;
+import com.university.entity.redis.StudentRedis;
 import com.university.service.UniversityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,9 +26,19 @@ public class UniversityController {
 
     private final UniversityService universityService;
 
-    @PostMapping(value = "/labOneQuery", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public LabOneDTO labOneQuery(@RequestBody FindStudentsDTO findStudentsDTO) {
-        return universityService.labOneQuery(findStudentsDTO);
+    @PostMapping(value = "/labOneQuery_V2", produces = MediaType.APPLICATION_JSON_VALUE)
+    public LabOneDTO labOneQuery_V2(@RequestBody FindStudentsDTO findStudentsDTO) {
+        return universityService.labOneQuery_V2(findStudentsDTO);
+    }
+
+    @GetMapping(value = "/labOneData_V2")
+    public String labOneData_V2() {
+        return universityService.labOneDate_V2();
+    }
+
+    @PostMapping(value = "/labOneQuery_V1", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public LabOneDTO labOneQuery_V1(@RequestBody FindStudentsDTO findStudentsDTO) {
+        return universityService.labOneQuery_V1(findStudentsDTO);
     }
 
     @GetMapping(value = "/labOneData")

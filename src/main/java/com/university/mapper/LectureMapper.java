@@ -2,7 +2,7 @@ package com.university.mapper;
 
 import com.university.dto.LectureDTO;
 import com.university.entity.Lecture;
-import com.university.entity.LectureElastic;
+import com.university.entity.elastic.LectureElastic;
 
 public class LectureMapper {
 

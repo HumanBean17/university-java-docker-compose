@@ -1,4 +1,4 @@
-package com.university.entity;
+package com.university.entity.mongo;
 
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -25,7 +25,7 @@ public class GroupMongo implements Serializable {
     @Field("group_code")
     String groupCode;
 
-    @DBRef
+    //@DBRef
     Set<StudentMongo> students = new HashSet<>();
 
 }

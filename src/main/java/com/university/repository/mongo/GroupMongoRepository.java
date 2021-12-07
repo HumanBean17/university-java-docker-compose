@@ -1,6 +1,6 @@
-package com.university.repository;
+package com.university.repository.mongo;
 
-import com.university.entity.GroupMongo;
+import com.university.entity.mongo.GroupMongo;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.UUID;

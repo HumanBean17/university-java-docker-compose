@@ -1,13 +1,11 @@
-package com.university.entity;
+package com.university.entity.redis;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
 
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

@@ -5,8 +5,19 @@ import com.university.dto.LabOneDTO;
 import com.university.dto.LectureDTO;
 import com.university.dto.StudentDTO;
 import com.university.entity.*;
+import com.university.entity.elastic.LectureElastic;
+import com.university.entity.mongo.GroupMongo;
+import com.university.entity.mongo.StudentMongo;
+import com.university.entity.neo4j.LectureNeo;
+import com.university.entity.neo4j.ScheduleNeo;
+import com.university.entity.redis.StudentRedis;
 import com.university.mapper.LectureMapper;
 import com.university.repository.*;
+import com.university.repository.elastic.LectureElasticRepository;
+import com.university.repository.mongo.GroupMongoRepository;
+import com.university.repository.mongo.StudentMongoRepository;
+import com.university.repository.neo4j.LectureNeoRepository;
+import com.university.repository.redis.StudentRedisRepository;
 import com.university.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
@@ -31,10 +42,12 @@ public class UniversityService {
     // Elastic
     private final LectureElasticRepository lectureElasticRepository;
     // Redis
-    private final RedisRepository redisRepository;
+    private final StudentRedisRepository studentRedisRepository;
     // Mongo
     private final GroupMongoRepository groupMongoRepository;
     private final StudentMongoRepository studentMongoRepository;
+    // Neo4j
+    private final LectureNeoRepository lectureNeoRepository;
 
     // Postgres
     private final LectureRepository lectureRepository;
@@ -47,7 +60,25 @@ public class UniversityService {
     private final SpecialityRepository specialityRepository;
 
     @Transactional(readOnly = true)
-    public LabOneDTO labOneQuery(FindStudentsDTO findStudentsDTO) {
+    public LabOneDTO labOneQuery_V2(FindStudentsDTO findStudentsDTO) {
+        return new LabOneDTO();
+    }
+
+    @Transactional
+    public String labOneDate_V2() {
+        Set<LectureDTO> lectures = Utils.getLectures(null, null);
+        for (LectureDTO lectureDTO : lectures) {
+            Schedule schedule = new Schedule();
+            schedule.setId(UUID.randomUUID());
+
+            lectureDTO.getScheduleNeo().add(new ScheduleNeo(schedule.getId(), null));
+            saveLecture(lectureDTO);
+        }
+        return "OK";
+    }
+
+    @Transactional(readOnly = true)
+    public LabOneDTO labOneQuery_V1(FindStudentsDTO findStudentsDTO) {
         List<LectureElastic> lectures = findByTextEntry(findStudentsDTO.getLecturePhrase());
 
         List<Schedule> schedules = new LinkedList<>();
@@ -96,7 +127,7 @@ public class UniversityService {
         int i = 0;
         for (Map.Entry<String, Integer> elem : set) {
             Student student = studentRepository.findById(elem.getKey()).get();
-            StudentRedis studentRedis = redisRepository.findStudentById(elem.getKey());
+            StudentRedis studentRedis = studentRedisRepository.findStudentById(elem.getKey());
             result.getStudents().add(
                     new StudentDTO(student.getId(), studentRedis.getName(), student.getGroupEntity(), student.getGroupEntity().getSpeciality(), elem.getValue()));
             if (i >= findStudentsDTO.getNumber()) {
@@ -224,7 +255,9 @@ public class UniversityService {
     public void saveLecture(LectureDTO dto) {
         Lecture lecture = new Lecture(dto.getId(), dto.getName(), dto.getSubject());
         LectureElastic lectureElastic = new LectureElastic(dto.getId().toString(), dto.getText());
+        LectureNeo lectureNeo = new LectureNeo(dto.getId(), dto.getScheduleNeo());
         lectureRepository.save(lecture);
+        lectureNeoRepository.save(lectureNeo);
         lectureElasticRepository.save(lectureElastic);
     }
 
@@ -242,13 +275,13 @@ public class UniversityService {
     @Transactional
     public void saveStudent(StudentDTO student) {
         studentRepository.save(new Student(student.getId(), student.getGroup()));
-        redisRepository.save(new StudentRedis(student.getId(), student.getName()));
+        studentRedisRepository.save(new StudentRedis(student.getId(), student.getName()));
         studentMongoRepository.save(new StudentMongo(student.getId(), student.getName()));
     }
 
     @Transactional(readOnly = true)
     public Map<String, StudentRedis> getAllStudents() {
-        return redisRepository.findAllStudents();
+        return studentRedisRepository.findAllStudents();
     }
 
     /***

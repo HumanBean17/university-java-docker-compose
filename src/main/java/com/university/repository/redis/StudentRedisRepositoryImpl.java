@@ -1,6 +1,6 @@
-package com.university.repository;
+package com.university.repository.redis;
 
-import com.university.entity.StudentRedis;
+import com.university.entity.redis.StudentRedis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -10,14 +10,14 @@ import javax.annotation.PostConstruct;
 import java.util.Map;
 
 @Repository
-public class RedisRepositoryImpl implements RedisRepository {
+public class StudentRedisRepositoryImpl implements StudentRedisRepository {
 
     private static final String STUDENT_KEY = "student";
     private final RedisTemplate<String, StudentRedis> redisTemplate;
     private HashOperations<String, String, StudentRedis> hashOperations;
 
     @Autowired
-    public RedisRepositoryImpl(RedisTemplate<String, StudentRedis> redisTemplate){
+    public StudentRedisRepositoryImpl(RedisTemplate<String, StudentRedis> redisTemplate){
         this.redisTemplate = redisTemplate;
     }
 

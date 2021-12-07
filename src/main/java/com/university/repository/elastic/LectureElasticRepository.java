@@ -1,6 +1,6 @@
-package com.university.repository;
+package com.university.repository.elastic;
 
-import com.university.entity.LectureElastic;
+import com.university.entity.elastic.LectureElastic;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Repository;
 

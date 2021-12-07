@@ -1,8 +1,8 @@
 package com.university.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.schema.Relationship;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,11 +11,13 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+// Lombok
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+// Hibernate
 @Entity
 @Table(name = "schedule")
 public class Schedule implements Serializable {
@@ -26,7 +28,8 @@ public class Schedule implements Serializable {
     @Column(name = "date")
     LocalDateTime date;
 
-    @OneToOne(targetEntity = Lecture.class)
+    // Hibernate
+    @ManyToOne(targetEntity = Lecture.class)
     @ToString.Exclude
     Lecture lecture;
 
