@@ -1,5 +1,6 @@
 package com.university.dto;
 
+import com.university.entity.mongo.CourseMongo;
 import lombok.*;
 
 import java.io.Serializable;
@@ -12,7 +13,6 @@ import java.io.Serializable;
 public class LabTwoDTO implements Serializable {
 
     Integer audienceCapacity;
-    Integer numberOfStudents;
-    CourseDTO course;
+    CourseMongo course;
 
 }

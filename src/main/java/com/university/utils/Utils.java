@@ -30,7 +30,7 @@ public class Utils {
         for (String elem : Data.BIG_DOCKER_LECTURES) {
             lecture = new LectureDTO();
             lecture.setId(UUID.randomUUID());
-            lecture.setName(UUID.randomUUID().toString().substring(0, 8).toUpperCase(Locale.ROOT));
+            lecture.setName(new LinkedList<>(Arrays.asList(elem.split(" "))).subList(0, 8).toString());
             lecture.setText(elem);
             lecture.setSubject(bigDockerSubj);
             lectures.add(lecture);
@@ -38,7 +38,7 @@ public class Utils {
         for (String elem : Data.LINUX_LECTURES) {
             lecture = new LectureDTO();
             lecture.setId(UUID.randomUUID());
-            lecture.setName(UUID.randomUUID().toString().substring(0, 8).toUpperCase(Locale.ROOT));
+            lecture.setName(new LinkedList<>(Arrays.asList(elem.split(" "))).subList(0, 2).toString());
             lecture.setText(elem);
             lecture.setSubject(linuxSubj);
             lectures.add(lecture);

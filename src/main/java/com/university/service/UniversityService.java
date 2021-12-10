@@ -98,10 +98,11 @@ public class UniversityService {
                         }
                     }
                 }
+                result.setCourse(course);
             }
         }
 
-        result.setAudienceCapacity(max);
+        result.setAudienceCapacity(max * 30);
         return result;
     }
 
