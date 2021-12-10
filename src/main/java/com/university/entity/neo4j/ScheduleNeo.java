@@ -6,6 +6,7 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -20,6 +21,7 @@ public class ScheduleNeo implements Serializable {
 
     @Id
     UUID id;
+    LocalDateTime date;
 
     @Relationship(type = "VISIT", direction = Relationship.Direction.OUTGOING)
     Set<VisitNeo> visits = new HashSet<>();

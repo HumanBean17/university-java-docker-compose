@@ -1,6 +1,6 @@
 package com.university.repository.redis;
 
-import com.university.entity.redis.StudentRedis;
+import com.university.entity.StudentRedis;
 
 import java.util.Map;
 

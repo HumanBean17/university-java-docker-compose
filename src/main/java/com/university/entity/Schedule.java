@@ -29,7 +29,7 @@ public class Schedule implements Serializable {
     LocalDateTime date;
 
     // Hibernate
-    @ManyToOne(targetEntity = Lecture.class)
+    @ManyToOne(targetEntity = Lecture.class, cascade = CascadeType.ALL)
     @ToString.Exclude
     Lecture lecture;
 

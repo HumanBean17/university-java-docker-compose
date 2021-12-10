@@ -6,8 +6,8 @@ import com.university.dto.LectureDTO;
 import com.university.dto.StudentDTO;
 import com.university.entity.*;
 import com.university.entity.elastic.LectureElastic;
-import com.university.entity.mongo.GroupMongo;
-import com.university.entity.redis.StudentRedis;
+import com.university.entity.mongo.SpecialityMongo;
+import com.university.entity.StudentRedis;
 import com.university.service.UniversityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,17 +33,22 @@ public class UniversityController {
 
     @GetMapping(value = "/labOneData_V2")
     public String labOneData_V2() {
-        return universityService.labOneDate_V2();
+        return universityService.labOneData_V2();
     }
 
-    @PostMapping(value = "/labOneQuery_V1", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public LabOneDTO labOneQuery_V1(@RequestBody FindStudentsDTO findStudentsDTO) {
-        return universityService.labOneQuery_V1(findStudentsDTO);
-    }
+//    @PostMapping(value = "/labOneQuery_V1", consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public LabOneDTO labOneQuery_V1(@RequestBody FindStudentsDTO findStudentsDTO) {
+//        return universityService.labOneQuery_V1(findStudentsDTO);
+//    }
 
-    @GetMapping(value = "/labOneData")
-    public String labOneData() {
-        return universityService.labOneData();
+//    @GetMapping(value = "/labOneData")
+//    public String labOneData() {
+//        return universityService.labOneData();
+//    }
+
+    @GetMapping(value = "/findAllMongoSpecialities")
+    public List<SpecialityMongo> findAllMongoSpecialities() {
+        return universityService.findAllMongoSpecialities();
     }
 
     /***
@@ -69,7 +74,8 @@ public class UniversityController {
      */
     @GetMapping(value = "/saveRandomSchedule", produces = MediaType.APPLICATION_JSON_VALUE)
     public Schedule saveRandomSchedule() {
-        return universityService.saveSchedule(getRandomSchedule(null, null));
+        return null;
+//        return universityService.saveSchedule(getRandomSchedule(null, null));
     }
 
     /***
@@ -107,15 +113,15 @@ public class UniversityController {
         }
     }
 
-    @GetMapping(value = "/getAllGroupsMongo", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<GroupMongo> getAllGroupsMongo() {
-        return universityService.getAllGroupsMongo();
-    }
-
-    @GetMapping(value = "/getAllGroups", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<GroupMongo> getAllGroups() {
-        return universityService.getAllGroupsMongo();
-//        return universityService.getAllGroups();
-    }
+//    @GetMapping(value = "/getAllGroupsMongo", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public List<GroupMongo> getAllGroupsMongo() {
+//        return universityService.getAllGroupsMongo();
+//    }
+//
+//    @GetMapping(value = "/getAllGroups", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public List<GroupMongo> getAllGroups() {
+//        return universityService.getAllGroupsMongo();
+////        return universityService.getAllGroups();
+//    }
 
 }

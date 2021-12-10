@@ -1,9 +1,12 @@
 package com.university.utils;
 
 import com.university.dto.LectureDTO;
+import com.university.dto.ScheduleDTO;
 import com.university.dto.StudentDTO;
+import com.university.dto.VisitDTO;
 import com.university.entity.*;
-import com.university.mapper.LectureMapper;
+import com.university.mapper.StudentMapper;
+//import com.university.mapper.LectureMapper;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -12,15 +15,12 @@ public class Utils {
 
     public static final Random rand = new Random();
 
-    public static Visit getRandomVisit(Schedule schedule, StudentDTO studentDTO) {
-        Visit visit = new Visit();
+    public static VisitDTO getRandomVisit(ScheduleDTO schedule, StudentDTO studentDTO) {
+        VisitDTO visit = new VisitDTO();
         visit.setId(UUID.randomUUID());
         visit.setVisited(rand.nextBoolean());
         visit.setSchedule(schedule);
-        Student student = new Student();
-        student.setId(studentDTO.getId());
-        student.setGroupEntity(studentDTO.getGroup());
-        visit.setStudent(student);
+        visit.setStudent(studentDTO);
         return visit;
     }
 
@@ -51,7 +51,7 @@ public class Utils {
         schedule.setId(UUID.randomUUID());
         schedule.setDate(LocalDateTime.now());
         schedule.setGroups(groups);
-        schedule.setLecture(LectureMapper.dtoToPostgreEntity(lectureDTO));
+//        schedule.setLecture(LectureMapper.dtoToPostgreEntity(lectureDTO));
         return schedule;
     }
 

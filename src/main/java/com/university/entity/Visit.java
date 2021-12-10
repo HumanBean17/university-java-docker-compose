@@ -21,7 +21,7 @@ public class Visit implements Serializable {
     @Column(name = "visited")
     boolean visited;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "schedule_id")
     Schedule schedule;
     @OneToOne

@@ -5,7 +5,7 @@ GET http://localhost:8080/api/getAllGroupsMongo
 GET http://localhost:8080/api/saveRandomGroup
 
 ###
-GET http://localhost:8080/api/getAllStudents
+GET http://localhost:8080/api/getAllStudentsRedis
 
 ###
 POST http://localhost:8080/api/addStudent
@@ -43,7 +43,7 @@ GET http://localhost:8080/api/labOneData
 
 ###
 
-POST http://localhost:8080/api/labOneQuery
+POST http://localhost:8080/api/labOneQuery_V1
 Content-Type: application/json
 
 {
@@ -56,3 +56,19 @@ Content-Type: application/json
 ###
 
 GET http://localhost:8080/api/labOneData_V2
+
+###
+
+POST http://localhost:8080/api/labOneQuery_V2
+Content-Type: application/json
+
+{
+  "lecturePhrase": "а",
+  "from": "2021-01-01T00:00:00",
+  "to": "2021-12-01T00:00:00",
+  "number": 100
+}
+
+###
+
+GET http://localhost:8080/api/findAllMongoSpecialities

@@ -7,7 +7,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
+import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -16,7 +19,11 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @SpringBootApplication
+//@EnableRedisRepositories
+//@EnableMongoRepositories
+//@EnableElasticsearchRepositories
 @EnableNeo4jRepositories
+//@ComponentScan(basePackages = {"com.university", "com.university.entity.redis"})
 public class UniversityApplication {
 
 	public static void main(String[] args) {

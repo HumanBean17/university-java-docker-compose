@@ -1,7 +1,8 @@
 package com.university.repository.redis;
 
-import com.university.entity.redis.StudentRedis;
+import com.university.entity.StudentRedis;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
@@ -10,6 +11,7 @@ import javax.annotation.PostConstruct;
 import java.util.Map;
 
 @Repository
+//@ComponentScan(basePackageClasses = StudentRedis.class)
 public class StudentRedisRepositoryImpl implements StudentRedisRepository {
 
     private static final String STUDENT_KEY = "student";

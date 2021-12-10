@@ -1,6 +1,8 @@
 package com.university.entity;
 
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,8 +22,8 @@ public class Course implements Serializable {
     @Id
     @Column(name = "id")
     UUID id;
-    @Column(name = "hours")
-    long hours;
+//    @Column(name = "hours")
+//    long hours;
 
     @ToString.Exclude
     @OneToMany(targetEntity = Speciality.class, cascade = CascadeType.ALL)

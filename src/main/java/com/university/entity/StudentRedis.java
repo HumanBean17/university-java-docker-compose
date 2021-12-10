@@ -1,4 +1,4 @@
-package com.university.entity.redis;
+package com.university.entity;
 
 import lombok.*;
 import org.springframework.data.redis.core.RedisHash;

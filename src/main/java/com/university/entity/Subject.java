@@ -18,8 +18,8 @@ public class Subject implements Serializable {
     @Id
     @Column(name = "id")
     UUID id;
-    @Column(name = "name")
-    String name;
+//    @Column(name = "name")
+//    String name;
 
     @ManyToOne
     @JoinColumn(name = "course_id")

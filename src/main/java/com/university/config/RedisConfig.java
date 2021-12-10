@@ -1,6 +1,6 @@
 package com.university.config;
 
-import com.university.entity.redis.StudentRedis;
+import com.university.entity.StudentRedis;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
