@@ -3,7 +3,10 @@ package com.university.service;
 import com.university.dto.*;
 import com.university.entity.*;
 import com.university.entity.elastic.LectureElastic;
+import com.university.entity.mongo.CourseMongo;
+import com.university.entity.mongo.LectureMongo;
 import com.university.entity.mongo.SpecialityMongo;
+import com.university.entity.mongo.SubjectMongo;
 import com.university.entity.neo4j.LectureNeo;
 import com.university.entity.StudentRedis;
 import com.university.entity.neo4j.ScheduleNeo;
@@ -59,37 +62,70 @@ public class UniversityService {
     private final SpecialityRepository specialityRepository;
 
     @Transactional(readOnly = true)
-    public LabOneDTO labOneQuery_V2(FindStudentsDTO findStudentsDTO) {
-        Set<ScheduleNeo> schedules = new HashSet<>();
-        Set<VisitNeo> visits = new HashSet<>();
-        Set<UUID> students = new HashSet<>();
+    public LabTwoDTO labTwoQuery(FindDTO findDTO) {
+        LabTwoDTO result = new LabTwoDTO();
+        int max = -1;
+        if (findDTO.getSemester() == 1) {
+            findDTO.setFrom(LocalDateTime.of(findDTO.getYear(), 9, 1, 0, 0, 0));
+            findDTO.setTo(LocalDateTime.of(findDTO.getYear(), 12, 31, 0, 0, 0));
+        } else if (findDTO.getSemester() == 2) {
+            findDTO.setFrom(LocalDateTime.of(findDTO.getYear(), 1, 1, 0, 0, 0));
+            findDTO.setTo(LocalDateTime.of(findDTO.getYear(), 5, 31, 0,0,0));
+        } else {
+            throw new UnsupportedOperationException();
+        }
 
-        List<UUID> tmpLectures = findByTextEntry(findStudentsDTO.getLecturePhrase()).
+        List<SpecialityMongo> specialities = specialityMongoRepository.findAll();
+        Set<UUID> lectures = new HashSet<>();
+        for (SpecialityMongo speciality : specialities) {
+            for (CourseMongo course : speciality.getCourses()) {
+                for (SubjectMongo subject : course.getSubjects()) {
+                    Set<UUID> tmpLectures = subject.getLectures()
+                            .stream()
+                            .map(LectureMongo::getId)
+                            .collect(Collectors.toSet());
+                    lectures.addAll(tmpLectures);
+
+                    List<Schedule> schedules = new LinkedList<>();
+                    for (UUID id : tmpLectures) {
+                        schedules.addAll(scheduleRepository.findAllByLectureIdAndDateBetween(id, findDTO.getFrom(), findDTO.getTo()));
+                    }
+
+                    for (Schedule schedule : schedules) {
+                        int groupsSize = schedule.getGroups().size();
+                        if (groupsSize > max) {
+                            max = groupsSize;
+                        }
+                    }
+                }
+            }
+        }
+
+        result.setAudienceCapacity(max);
+        return result;
+    }
+
+    @Transactional(readOnly = true)
+    public LabOneDTO labOneQuery(FindDTO findDTO) {
+//        Set<ScheduleNeo> schedules = new HashSet<>();
+        Set<VisitNeo> visits = new HashSet<>();
+
+        List<UUID> tmpLectures = findByTextEntry(findDTO.getLecturePhrase()).
                 stream()
                 .map(elem -> UUID.fromString(elem.getId()))
                 .collect(Collectors.toList());
         List<LectureNeo> lectures = lectureNeoRepository.findAllById(tmpLectures);
 
         for (LectureNeo lecture : lectures) {
-            schedules.addAll(lecture.getSchedules()
+            Set<ScheduleNeo> tmpSchedules = lecture.getSchedules()
                     .stream()
-                    .filter(elem -> elem.getDate().isAfter(findStudentsDTO.getFrom()) && elem.getDate().isBefore(findStudentsDTO.getTo()))
-                    .collect(Collectors.toSet()));
-            for (ScheduleNeo schedule : schedules) {
+                    .filter(elem -> elem.getDate().isAfter(findDTO.getFrom()) && elem.getDate().isBefore(findDTO.getTo()))
+                    .collect(Collectors.toSet());
+//            schedules.addAll(tmpSchedules);
+            for (ScheduleNeo schedule : tmpSchedules) {
                 visits.addAll(schedule.getVisits());
             }
         }
-
-//        for (LectureElastic lectureElastic : lectures) {
-//            schedules.addAll(scheduleRepository.findByLectureIdAndDateBetween(
-//                    UUID.fromString(lectureElastic.getId()),
-//                    findStudentsDTO.getFrom(),
-//                    findStudentsDTO.getTo()));
-//        }
-//
-//        for (Schedule schedule : schedules) {
-//            visits.addAll(visitRepository.findAllByScheduleId(schedule.getId()));
-//        }
 
         Map<String, Integer> visited = new HashMap<>();
         Map<String, Integer> unvisited = new HashMap<>();
@@ -125,19 +161,19 @@ public class UniversityService {
             StudentRedis studentRedis = studentRedisRepository.findStudentById(elem.getKey());
             result.getStudents().add(
                     new StudentDTO(student.getId(), studentRedis.getName(), student.getGroupEntity(), student.getGroupEntity().getSpeciality(), elem.getValue()));
-            if (i >= findStudentsDTO.getNumber()) {
+            if (i >= findDTO.getNumber()) {
                 break;
             }
             i++;
         }
-        result.setFrom(findStudentsDTO.getFrom());
-        result.setTo(findStudentsDTO.getTo());
-        result.setPhrase(findStudentsDTO.getLecturePhrase());
+        result.setFrom(findDTO.getFrom());
+        result.setTo(findDTO.getTo());
+        result.setPhrase(findDTO.getLecturePhrase());
         return result;
     }
 
     @Transactional
-    public String labOneData_V2() {
+    public String labOneData() {
         // Saving Specialities and Course
         Set<SpecialityDTO> specialities = new HashSet<>();
         SpecialityDTO speciality = new SpecialityDTO();
@@ -223,149 +259,6 @@ public class UniversityService {
         }
         return "OK";
     }
-
-//    @Transactional(readOnly = true)
-//    public LabOneDTO labOneQuery_V1(FindStudentsDTO findStudentsDTO) {
-//        List<LectureElastic> lectures = findByTextEntry(findStudentsDTO.getLecturePhrase());
-//
-//        List<Schedule> schedules = new LinkedList<>();
-//        List<Visit> visits = new LinkedList<>();
-//        List<Student> students = new LinkedList<>();
-//
-//        for (LectureElastic lectureElastic : lectures) {
-//            schedules.addAll(scheduleRepository.findByLectureIdAndDateBetween(
-//                    UUID.fromString(lectureElastic.getId()),
-//                    findStudentsDTO.getFrom(),
-//                    findStudentsDTO.getTo()));
-//        }
-//
-//        for (Schedule schedule : schedules) {
-//            visits.addAll(visitRepository.findAllByScheduleId(schedule.getId()));
-//        }
-//
-//        Map<String, Integer> visited = new HashMap<>();
-//        Map<String, Integer> unvisited = new HashMap<>();
-//        SortedMap<String, Integer> percentVisit = new TreeMap<>();
-//        for (Visit visit : visits) {
-//            String id = visit.getStudent().getId();
-//            if (visit.isVisited()) {
-//                visited.put(id, visited.get(id) == null ? 1 : visited.get(id) + 1);
-//            } else {
-//                unvisited.put(id, unvisited.get(id) == null ? 1 : unvisited.get(id) + 1);
-//            }
-//        }
-//        for (Map.Entry<String, Integer> elem : unvisited.entrySet()) {
-//            if (visited.get(elem.getKey()) != null) {
-//                percentVisit.put(elem.getKey(), elem.getValue() * 100 / (elem.getValue() + visited.get(elem.getKey())));
-//            } else {
-//                percentVisit.put(elem.getKey(), 0);
-//            }
-//        }
-//        for (Map.Entry<String, Integer> elem : visited.entrySet()) {
-//            if (unvisited.get(elem.getKey()) != null) {
-//                percentVisit.put(elem.getKey(), elem.getValue() * 100 / (elem.getValue() + unvisited.get(elem.getKey())));
-//            } else {
-//                percentVisit.put(elem.getKey(), 100);
-//            }
-//        }
-//
-//        LabOneDTO result = new LabOneDTO();
-//        Set<Map.Entry<String, Integer>> set = Utils.entriesSortedByValues(percentVisit);
-//        int i = 0;
-//        for (Map.Entry<String, Integer> elem : set) {
-//            Student student = studentRepository.findById(elem.getKey()).get();
-//            StudentRedis studentRedis = studentRedisRepository.findStudentById(elem.getKey());
-//            result.getStudents().add(
-//                    new StudentDTO(student.getId(), studentRedis.getName(), student.getGroupEntity(), student.getGroupEntity().getSpeciality(), elem.getValue()));
-//            if (i >= findStudentsDTO.getNumber()) {
-//                break;
-//            }
-//            i++;
-//        }
-//        result.setFrom(findStudentsDTO.getFrom());
-//        result.setTo(findStudentsDTO.getTo());
-//        result.setPhrase(findStudentsDTO.getLecturePhrase());
-//        return result;
-//    }
-
-//    @Transactional
-//    public String labOneData() {
-//        // Saving Specialities and Course
-//        Set<Speciality> specialities = new HashSet<>();
-//        Speciality speciality = new Speciality();
-//        speciality.setId(UUID.randomUUID());
-////        speciality.setName("Информационные системы и технологии");
-//        specialities.add(speciality);
-//
-//        Course course = new Course();
-//        course.setId(UUID.randomUUID());
-////        course.setHours(90);
-//        course.setSpecialities(specialities);
-//        courseRepository.save(course);
-//
-//        // Saving Subjects
-//        Subject bigDockerSubj = new Subject();
-//        bigDockerSubj.setCourse(course);
-//        bigDockerSubj.setId(UUID.randomUUID());
-////        bigDockerSubj.setName("Принципы построения, проектирования и эксплуатации информационных систем");
-//        subjectRepository.save(bigDockerSubj);
-//        Subject linuxSubj = new Subject();
-//        linuxSubj.setCourse(course);
-//        linuxSubj.setId(UUID.randomUUID());
-////        linuxSubj.setName("Основы администрирования программно-аппаратных комплексов под управлением ОС Linux");
-//        subjectRepository.save(linuxSubj);
-//
-//        // Saving Group with Students
-//        Set<StudentDTO> students = new HashSet<>();
-//        Set<Group> groups = new HashSet<>();
-//
-//        for (int i = 0; i < 3; i++) {
-//            Group group = Utils.getRandomGroup();
-//            group.setSpeciality(speciality);
-//            saveGroup(group);
-//            Set<StudentDTO> tmpStudents = new HashSet<>();
-//
-//            for (int j = 0; j < 30; j++) {
-//                StudentDTO studentDTO = Utils.getRandomStudent(group);
-//                Student student = new Student(studentDTO.getId(), studentDTO.getGroup());
-//                tmpStudents.add(studentDTO);
-//                group.getStudents().add(student);
-//
-//                saveStudent(studentDTO);
-//            }
-//            students.addAll(tmpStudents);
-//            groups.add(group);
-//
-//        }
-//
-//        // Saving Lecture and Schedules
-//        HashSet<LectureDTO> lectures = Utils.getLectures(bigDockerSubj, linuxSubj);
-//        int month = 1;
-//        int day = 8;
-//        LocalDateTime dateTime = LocalDateTime.of(2021, month, day, 9, 0, 0, 0);
-//        for (LectureDTO elem : lectures) {
-//            saveLecture(elem);
-//
-//            Schedule schedule = new Schedule();
-//            schedule.setId(UUID.randomUUID());
-////            schedule.setLecture(LectureMapper.dtoToPostgreEntity(elem));
-//            schedule.setGroups(groups);
-//            schedule.setDate(dateTime);
-//            day += 10;
-//            if (day >= 28) {
-//                month += 1;
-//                day = 8;
-//            }
-//            dateTime = LocalDateTime.of(2021, month, day, 9, 0, 0, 0);
-//            saveSchedule(schedule);
-//
-//            for (StudentDTO student : students) {
-//                Visit visit = Utils.getRandomVisit(schedule, student);
-//                saveVisit(visit);
-//            }
-//        }
-//        return "ok";
-//    }
 
     /***
      * SPECIALITY

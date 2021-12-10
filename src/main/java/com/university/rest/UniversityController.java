@@ -1,9 +1,6 @@
 package com.university.rest;
 
-import com.university.dto.FindStudentsDTO;
-import com.university.dto.LabOneDTO;
-import com.university.dto.LectureDTO;
-import com.university.dto.StudentDTO;
+import com.university.dto.*;
 import com.university.entity.*;
 import com.university.entity.elastic.LectureElastic;
 import com.university.entity.mongo.SpecialityMongo;
@@ -26,25 +23,20 @@ public class UniversityController {
 
     private final UniversityService universityService;
 
-    @PostMapping(value = "/labOneQuery_V2", produces = MediaType.APPLICATION_JSON_VALUE)
-    public LabOneDTO labOneQuery_V2(@RequestBody FindStudentsDTO findStudentsDTO) {
-        return universityService.labOneQuery_V2(findStudentsDTO);
+    @PostMapping(value = "/labTwoQuery", produces = MediaType.APPLICATION_JSON_VALUE)
+    public LabTwoDTO labTwoQuery(@RequestBody FindDTO findDTO) {
+        return universityService.labTwoQuery(findDTO);
     }
 
-    @GetMapping(value = "/labOneData_V2")
-    public String labOneData_V2() {
-        return universityService.labOneData_V2();
+    @PostMapping(value = "/labOneQuery", produces = MediaType.APPLICATION_JSON_VALUE)
+    public LabOneDTO labOneQuery(@RequestBody FindDTO findDTO) {
+        return universityService.labOneQuery(findDTO);
     }
 
-//    @PostMapping(value = "/labOneQuery_V1", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public LabOneDTO labOneQuery_V1(@RequestBody FindStudentsDTO findStudentsDTO) {
-//        return universityService.labOneQuery_V1(findStudentsDTO);
-//    }
-
-//    @GetMapping(value = "/labOneData")
-//    public String labOneData() {
-//        return universityService.labOneData();
-//    }
+    @GetMapping(value = "/labOneData")
+    public String labOneData() {
+        return universityService.labOneData();
+    }
 
     @GetMapping(value = "/findAllMongoSpecialities")
     public List<SpecialityMongo> findAllMongoSpecialities() {
@@ -56,7 +48,7 @@ public class UniversityController {
      * LECTURE API
      */
     @PostMapping(value = "/findLectureByTextEntry", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<LectureElastic> findLectureByTextEntry(@RequestBody FindStudentsDTO dto) {
+    public List<LectureElastic> findLectureByTextEntry(@RequestBody FindDTO dto) {
         return universityService.findByTextEntry(dto.getLecturePhrase());
     }
     @PostMapping(value = "/addLecture", consumes = MediaType.APPLICATION_JSON_VALUE)

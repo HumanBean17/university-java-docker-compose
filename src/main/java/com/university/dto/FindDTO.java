@@ -13,15 +13,18 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FindStudentsDTO implements Serializable {
+public class FindDTO implements Serializable {
 
     String lecturePhrase;
-
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
     LocalDateTime from;
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
     LocalDateTime to;
-
     Integer number;
+
+    String courseName;
+    Integer semester;
+    Integer year;
+    Boolean isComputerClass;
 
 }

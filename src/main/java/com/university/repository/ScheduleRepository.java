@@ -11,5 +11,5 @@ import java.util.UUID;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, UUID> {
 
-    List<Schedule> findByLectureIdAndDateBetween(UUID lectureId, LocalDateTime from, LocalDateTime to);
+    List<Schedule> findAllByLectureIdAndDateBetween(UUID lectureId, LocalDateTime from, LocalDateTime to);
 }
