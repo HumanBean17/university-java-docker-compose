@@ -12,6 +12,7 @@ public class CourseMapper {
         CourseMongo courseMongo = new CourseMongo();
         courseMongo.setId(courseDTO.getId());
         courseMongo.setHour(courseDTO.getHours());
+        courseMongo.setName(courseMongo.getName());
         for (SubjectDTO subjectDTO : courseDTO.getSubjects()) {
             courseMongo.getSubjects().add(SubjectMapper.dtoToMongo(subjectDTO));
         }

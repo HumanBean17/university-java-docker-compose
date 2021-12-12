@@ -5,8 +5,7 @@ import com.university.dto.ScheduleDTO;
 import com.university.dto.StudentDTO;
 import com.university.dto.VisitDTO;
 import com.university.entity.*;
-import com.university.mapper.StudentMapper;
-//import com.university.mapper.LectureMapper;
+import com.university.mapper.LectureMapper;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -51,7 +50,7 @@ public class Utils {
         schedule.setId(UUID.randomUUID());
         schedule.setDate(LocalDateTime.now());
         schedule.setGroups(groups);
-//        schedule.setLecture(LectureMapper.dtoToPostgreEntity(lectureDTO));
+        schedule.setLecture(LectureMapper.dtoToPostgres(lectureDTO));
         return schedule;
     }
 

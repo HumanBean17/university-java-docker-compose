@@ -6,6 +6,8 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -21,4 +23,6 @@ public class LectureMongo implements Serializable {
 
     @Field(name = "name")
     String name;
+
+//    Set<ScheduleMongo> schedules = new HashSet<>();
 }

@@ -1,0 +1,293 @@
+{
+  "_id": "BinData(3, r0jDqBWQ88JqYTIe4Ct5gA==)",
+  "name": "Информационные системы и технологии",
+  "courses": [
+    {
+      "_id": "BinData(3, JECSn0/VabVKahpu82YVhg==)",
+      "hour": 90,
+      "subjects": [
+        {
+          "_id": BinData(3,
+          "S0jshAlWVk/E7eDI9lfegw=="
+          ),
+          "name": "Принципы построения, проектирования и эксплуатации информационных систем",
+          "lectures": [
+            {
+              "_id": BinData(3,
+              "S05NUcQFUuhVDp+9HIPdkw=="
+              ),
+              "name": "E0F54460"
+            },
+            {
+              "_id": BinData(3,
+              "dUSnLgREvGu8PnnaObwzrA=="
+              ),
+              "name": "884BE947"
+            },
+            {
+              "_id": BinData(3,
+              "c0LsF8Yo9HeAgP5FzTyNgw=="
+              ),
+              "name": "51139C3B"
+            },
+            {
+              "_id": BinData(3,
+              "80QgREHcjnRd5MvcGGrNpA=="
+              ),
+              "name": "66180BE8"
+            },
+            {
+              "_id": BinData(3,
+              "IkzAmg8yABGTcrLBry2flA=="
+              ),
+              "name": "E8869083"
+            },
+            {
+              "_id": BinData(3,
+              "d044MkloSuVpfmXbs3BNpQ=="
+              ),
+              "name": "EE1EAB96"
+            },
+            {
+              "_id": BinData(3,
+              "HEEDtt3he50zgrN41vNSgg=="
+              ),
+              "name": "8E2F77B9"
+            },
+            {
+              "_id": BinData(3,
+              "dURAdfd+T1qPVpXWH8L8tg=="
+              ),
+              "name": "177432F4"
+            },
+            {
+              "_id": BinData(3,
+              "A0+r6qc6O5Lu0NjLPCL+oQ=="
+              ),
+              "name": "6AD7BBC5"
+            },
+            {
+              "_id": BinData(3,
+              "5EUD/cSjV7iUde1Cui6Ohg=="
+              ),
+              "name": "7AC7CDB0"
+            },
+            {
+              "_id": BinData(3,
+              "6EvFbLqN6MXLry4wGDwamw=="
+              ),
+              "name": "83BC61F6"
+            },
+            {
+              "_id": BinData(3,
+              "EkBZOrjz/2S0cYadxKIGvQ=="
+              ),
+              "name": "A160FD60"
+            },
+            {
+              "_id": BinData(3,
+              "eUB88GI5GXMubgCh7LMOrg=="
+              ),
+              "name": "66388316"
+            },
+            {
+              "_id": BinData(3,
+              "K0RFEcEXgXTT7oltM6t3qQ=="
+              ),
+              "name": "981A739B"
+            },
+            {
+              "_id": BinData(3,
+              "rU0Nm4DzVlNRr2tnzCafrA=="
+              ),
+              "name": "731EFA28"
+            },
+            {
+              "_id": BinData(3,
+              "EErAnfKATpnUfFJCzLSEkw=="
+              ),
+              "name": "E92BE093"
+            },
+            {
+              "_id": BinData(3,
+              "GEKHEhxnOIy08ShP82DFjg=="
+              ),
+              "name": "9C53A991"
+            },
+            {
+              "_id": BinData(3,
+              "+EW3uRCLnZwngbgTv9IQtA=="
+              ),
+              "name": "BF001A5D"
+            },
+            {
+              "_id": BinData(3,
+              "kEWwI0lHbfy0BGocK6r8rA=="
+              ),
+              "name": "2C73B699"
+            },
+            {
+              "_id": BinData(3,
+              "O0g2uzUF3ua2lIFUrX1ahg=="
+              ),
+              "name": "F1B03AF5"
+            },
+            {
+              "_id": BinData(3,
+              "i0NQ/FS9BybIlguA5BQfoA=="
+              ),
+              "name": "CB9400A5"
+            },
+            {
+              "_id": BinData(3,
+              "+k9TQfwBmvaPOv7MN5ncnA=="
+              ),
+              "name": "22A438B6"
+            }
+          ]
+        },
+        {
+          "_id": BinData(3,
+          "7EdOPqw768xL9VK1R0xgqA=="
+          ),
+          "name": "Основы администрирования программно-аппаратных комплексов под управлением ОС Linux",
+          "lectures": [
+            {
+              "_id": BinData(3,
+              "+EW3uRCLnZwngbgTv9IQtA=="
+              ),
+              "name": "BF001A5D"
+            },
+            {
+              "_id": BinData(3,
+              "IkzAmg8yABGTcrLBry2flA=="
+              ),
+              "name": "E8869083"
+            },
+            {
+              "_id": BinData(3,
+              "+k9TQfwBmvaPOv7MN5ncnA=="
+              ),
+              "name": "22A438B6"
+            },
+            {
+              "_id": BinData(3,
+              "EErAnfKATpnUfFJCzLSEkw=="
+              ),
+              "name": "E92BE093"
+            },
+            {
+              "_id": BinData(3,
+              "GEKHEhxnOIy08ShP82DFjg=="
+              ),
+              "name": "9C53A991"
+            },
+            {
+              "_id": BinData(3,
+              "dUSnLgREvGu8PnnaObwzrA=="
+              ),
+              "name": "884BE947"
+            },
+            {
+              "_id": BinData(3,
+              "S05NUcQFUuhVDp+9HIPdkw=="
+              ),
+              "name": "E0F54460"
+            },
+            {
+              "_id": BinData(3,
+              "kEWwI0lHbfy0BGocK6r8rA=="
+              ),
+              "name": "2C73B699"
+            },
+            {
+              "_id": BinData(3,
+              "O0g2uzUF3ua2lIFUrX1ahg=="
+              ),
+              "name": "F1B03AF5"
+            },
+            {
+              "_id": BinData(3,
+              "i0NQ/FS9BybIlguA5BQfoA=="
+              ),
+              "name": "CB9400A5"
+            },
+            {
+              "_id": BinData(3,
+              "c0LsF8Yo9HeAgP5FzTyNgw=="
+              ),
+              "name": "51139C3B"
+            },
+            {
+              "_id": BinData(3,
+              "eUB88GI5GXMubgCh7LMOrg=="
+              ),
+              "name": "66388316"
+            },
+            {
+              "_id": BinData(3,
+              "A0+r6qc6O5Lu0NjLPCL+oQ=="
+              ),
+              "name": "6AD7BBC5"
+            },
+            {
+              "_id": BinData(3,
+              "rU0Nm4DzVlNRr2tnzCafrA=="
+              ),
+              "name": "731EFA28"
+            },
+            {
+              "_id": BinData(3,
+              "d044MkloSuVpfmXbs3BNpQ=="
+              ),
+              "name": "EE1EAB96"
+            },
+            {
+              "_id": BinData(3,
+              "EkBZOrjz/2S0cYadxKIGvQ=="
+              ),
+              "name": "A160FD60"
+            },
+            {
+              "_id": BinData(3,
+              "K0RFEcEXgXTT7oltM6t3qQ=="
+              ),
+              "name": "981A739B"
+            },
+            {
+              "_id": BinData(3,
+              "5EUD/cSjV7iUde1Cui6Ohg=="
+              ),
+              "name": "7AC7CDB0"
+            },
+            {
+              "_id": BinData(3,
+              "dURAdfd+T1qPVpXWH8L8tg=="
+              ),
+              "name": "177432F4"
+            },
+            {
+              "_id": BinData(3,
+              "6EvFbLqN6MXLry4wGDwamw=="
+              ),
+              "name": "83BC61F6"
+            },
+            {
+              "_id": BinData(3,
+              "HEEDtt3he50zgrN41vNSgg=="
+              ),
+              "name": "8E2F77B9"
+            },
+            {
+              "_id": BinData(3,
+              "80QgREHcjnRd5MvcGGrNpA=="
+              ),
+              "name": "66180BE8"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "_class": "com.university.entity.mongo.SpecialityMongo"
+}

@@ -21,6 +21,8 @@ public class CourseMongo implements Serializable {
     @Id
     UUID id;
 
+    @Field(name = "name")
+    String name;
     @Field(name = "hour")
     Integer hour;
 

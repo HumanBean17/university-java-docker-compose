@@ -91,6 +91,9 @@ public class UniversityService {
                         schedules.addAll(scheduleRepository.findAllByLectureIdAndDateBetween(id, findDTO.getFrom(), findDTO.getTo()));
                     }
 
+                    if (!schedules.isEmpty()) {
+                        result.setCourse(course);
+                    }
                     for (Schedule schedule : schedules) {
                         int groupsSize = schedule.getGroups().size();
                         if (groupsSize > max) {
@@ -98,11 +101,13 @@ public class UniversityService {
                         }
                     }
                 }
-                result.setCourse(course);
+                break;
             }
         }
 
-        result.setAudienceCapacity(max * 30);
+        if (result.getCourse() != null) {
+            result.setAudienceCapacity(max * 30);
+        }
         return result;
     }
 
@@ -185,6 +190,7 @@ public class UniversityService {
         CourseDTO course = new CourseDTO();
         course.setId(UUID.randomUUID());
         course.setHours(90);
+        course.setName("Разработка безопасного программного обеспечения");
         course.setSpecialities(specialities);
         courseRepository.save(CourseMapper.dtoToPostgres(course));
 
@@ -266,20 +272,6 @@ public class UniversityService {
      */
     @Transactional
     public void saveSpeciality(SpecialityDTO specialityDTO) {
-        Set<CourseDTO> courses = specialityDTO.getCourses();
-        Set<SubjectDTO> subjects = new HashSet<>();
-//        Set<LectureDTO> lectures = new HashSet<>();
-        for (CourseDTO courseDTO : courses) {
-            subjects.addAll(courseDTO.getSubjects());
-//            courseRepository.save(CourseMapper.dtoToPostgres(courseDTO));
-        }
-        for (SubjectDTO subjectDTO : subjects) {
-//            lectures.addAll(subjectDTO.getLectures());
-//            subjectRepository.save(SubjectMapper.dtoToPostgres(subjectDTO));
-        }
-//        for (LectureDTO lectureDTO : lectures) {
-//            saveLecture(lectureDTO);
-//        }
         specialityRepository.save(SpecialityMapper.dtoToPostgres(specialityDTO));
         specialityMongoRepository.save(SpecialityMapper.dtoToMongo(specialityDTO));
     }

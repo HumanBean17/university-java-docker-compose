@@ -2,7 +2,7 @@ FLUSHALL
 
 MATCH (n) DETACH DELETE n
 
-db.groupMongo.find()
-db.groupMongo.deleteMany({})
+db.specialityMongo.find()
+db.specialityMongo.deleteMany({})
 
 curl -XDELETE 'localhost:9200/lectureindex/'

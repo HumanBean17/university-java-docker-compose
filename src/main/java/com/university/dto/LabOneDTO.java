@@ -1,5 +1,6 @@
 package com.university.dto;
 
+import com.university.entity.StudentRedis;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 public class LabOneDTO {
 
+//    List<StudentRedis> students = new LinkedList<>();
     List<StudentDTO> students = new LinkedList<>();
     LocalDateTime from;
     LocalDateTime to;

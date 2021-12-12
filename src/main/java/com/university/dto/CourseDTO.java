@@ -18,6 +18,7 @@ public class CourseDTO implements Serializable {
 
     UUID id;
     Integer hours;
+    String name;
     Set<SubjectDTO> subjects = new HashSet<>();
     Set<SpecialityDTO> specialities = new HashSet<>();
 }
