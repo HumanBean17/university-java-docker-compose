@@ -25,4 +25,9 @@ public class ScheduleNeo implements Serializable {
 
     @Relationship(type = "VISIT", direction = Relationship.Direction.OUTGOING)
     Set<VisitNeo> visits = new HashSet<>();
+
+    @Relationship(type = "LECTURE", direction = Relationship.Direction.OUTGOING)
+    LectureNeo lecture;
+
+    Set<String> groups = new HashSet<>();
 }

@@ -24,10 +24,13 @@ public class LectureMapper {
         return lecture;
     }
 
-    public static LectureNeo dtoToNeo(LectureDTO lectureDTO) {
+    public static LectureNeo dtoToNeo(LectureDTO lectureDTO, boolean callFromScheduleMapper) {
         LectureNeo lecture = new LectureNeo();
         lecture.setId(lectureDTO.getId());
         for (ScheduleDTO scheduleDTO : lectureDTO.getSchedules()) {
+            if (callFromScheduleMapper == true) {
+                break;
+            }
             lecture.getSchedules().add(ScheduleMapper.dtoToNeo(scheduleDTO));
         }
         return lecture;

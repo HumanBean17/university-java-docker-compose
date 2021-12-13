@@ -65,4 +65,12 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/api/findAllMongoSpecialities
+POST http://localhost:8080/api/labThreeQuery
+Content-Type: application/json
+
+{
+  "groupId": "81D73E87",
+  "number": 1000
+}
+
+###

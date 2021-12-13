@@ -23,6 +23,11 @@ public class UniversityController {
 
     private final UniversityService universityService;
 
+    @PostMapping(value = "/labThreeQuery", produces = MediaType.APPLICATION_JSON_VALUE)
+    public LabThreeDTO labThreeQuery(@RequestBody FindDTO findDTO) {
+        return universityService.labThreeQuery(findDTO);
+    }
+
     @PostMapping(value = "/labTwoQuery", produces = MediaType.APPLICATION_JSON_VALUE)
     public LabTwoDTO labTwoQuery(@RequestBody FindDTO findDTO) {
         return universityService.labTwoQuery(findDTO);

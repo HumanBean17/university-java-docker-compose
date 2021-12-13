@@ -27,4 +27,6 @@ public class FindDTO implements Serializable {
     Integer year;
     Boolean isComputerClass;
 
+    String groupId;
+
 }
