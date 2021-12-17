@@ -4,12 +4,14 @@ import com.university.entity.Group;
 import com.university.entity.Speciality;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class StudentDTO {
+public class StudentDTO implements Serializable {
 
     String id;
     String name;

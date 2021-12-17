@@ -12,7 +12,7 @@ POST http://localhost:8080/api/addStudent
 Content-Type: application/json
 
 {
-  "id": "a30a8751-3b12-48ec-856c-a4c298462451",
+  "id": "a32a9751-3b12-59ec-856c-a4c298462451",
   "name": "Dmitry"
 }
 

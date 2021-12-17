@@ -11,7 +11,6 @@ import javax.annotation.PostConstruct;
 import java.util.Map;
 
 @Repository
-//@ComponentScan(basePackageClasses = StudentRedis.class)
 public class StudentRedisRepositoryImpl implements StudentRedisRepository {
 
     private static final String STUDENT_KEY = "student";

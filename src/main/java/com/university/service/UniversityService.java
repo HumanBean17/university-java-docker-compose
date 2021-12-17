@@ -132,6 +132,7 @@ public class UniversityService {
     @Transactional(readOnly = true)
     public LabOneDTO labOneQuery(FindDTO findDTO) {
         Set<VisitNeo> visits = new HashSet<>();
+        LabOneDTO result = new LabOneDTO();
 
         List<UUID> tmpLectures = findByTextEntry(findDTO.getLecturePhrase()).
                 stream()
@@ -150,45 +151,7 @@ public class UniversityService {
             }
         }
 
-        Map<String, Integer> visited = new HashMap<>();
-        Map<String, Integer> unvisited = new HashMap<>();
-        SortedMap<String, Integer> percentVisit = new TreeMap<>();
-        for (VisitNeo visit : visits) {
-            String id = visit.getStudent().toString();
-            if (visit.isVisited()) {
-                visited.put(id, visited.get(id) == null ? 1 : visited.get(id) + 1);
-            } else {
-                unvisited.put(id, unvisited.get(id) == null ? 1 : unvisited.get(id) + 1);
-            }
-        }
-        for (Map.Entry<String, Integer> elem : unvisited.entrySet()) {
-            if (visited.get(elem.getKey()) != null) {
-                percentVisit.put(elem.getKey(), elem.getValue() * 100 / (elem.getValue() + visited.get(elem.getKey())));
-            } else {
-                percentVisit.put(elem.getKey(), 0);
-            }
-        }
-        for (Map.Entry<String, Integer> elem : visited.entrySet()) {
-            if (unvisited.get(elem.getKey()) != null) {
-                percentVisit.put(elem.getKey(), elem.getValue() * 100 / (elem.getValue() + unvisited.get(elem.getKey())));
-            } else {
-                percentVisit.put(elem.getKey(), 100);
-            }
-        }
-
-        LabOneDTO result = new LabOneDTO();
-        Set<Map.Entry<String, Integer>> set = Utils.entriesSortedByValues(percentVisit);
-        int i = 0;
-        for (Map.Entry<String, Integer> elem : set) {
-            Student student = studentRepository.findById(elem.getKey()).get();
-            StudentRedis studentRedis = studentRedisRepository.findStudentById(elem.getKey());
-            result.getStudents().add(
-                    new StudentDTO(student.getId(), studentRedis.getName(), student.getGroupEntity(), student.getGroupEntity().getSpeciality(), elem.getValue()));
-            if (i >= findDTO.getNumber()) {
-                break;
-            }
-            i++;
-        }
+        result.getStudents().addAll(getStudentsWithVisitsPercent(findDTO, visits));
         result.setFrom(findDTO.getFrom());
         result.setTo(findDTO.getTo());
         result.setPhrase(findDTO.getLecturePhrase());
@@ -227,10 +190,11 @@ public class UniversityService {
         Set<Map.Entry<String, Integer>> set = Utils.entriesSortedByValues(percentVisit);
         int i = 0;
         for (Map.Entry<String, Integer> elem : set) {
-            Student student = studentRepository.findById(elem.getKey()).get();
+//            Student student = studentRepository.findById(elem.getKey()).get();
             StudentRedis studentRedis = studentRedisRepository.findStudentById(elem.getKey());
-            result.add(
-                    new StudentDTO(student.getId(), studentRedis.getName(), student.getGroupEntity(), student.getGroupEntity().getSpeciality(), elem.getValue()));
+            studentRedis.getStudentDTO().setVisitPercentage(elem.getValue());
+            result.add(studentRedis.getStudentDTO());
+//                    new StudentDTO(student.getId(), studentRedis.getName(), student.getGroupEntity(), student.getGroupEntity().getSpeciality(), elem.getValue()));
             if (i >= findDTO.getNumber()) {
                 break;
             }
@@ -239,7 +203,7 @@ public class UniversityService {
         return result;
     }
 
-    private List<StudentDTO> getStudentsWithVisitsPercent(FindDTO findDTO, List<VisitNeo> visits) {
+    private List<StudentDTO> getStudentsWithVisitsPercent(FindDTO findDTO, Set<VisitNeo> visits) {
         List<StudentDTO> result = new LinkedList<>();
 
         Map<String, Integer> visited = new HashMap<>();
@@ -271,10 +235,11 @@ public class UniversityService {
         Set<Map.Entry<String, Integer>> set = Utils.entriesSortedByValues(percentVisit);
         int i = 0;
         for (Map.Entry<String, Integer> elem : set) {
-            Student student = studentRepository.findById(elem.getKey()).get();
+//            Student student = studentRepository.findById(elem.getKey()).get();
             StudentRedis studentRedis = studentRedisRepository.findStudentById(elem.getKey());
-            result.add(
-                    new StudentDTO(student.getId(), studentRedis.getName(), student.getGroupEntity(), student.getGroupEntity().getSpeciality(), elem.getValue()));
+            studentRedis.getStudentDTO().setVisitPercentage(elem.getValue());
+            result.add(studentRedis.getStudentDTO());
+                    //new StudentDTO(student.getId(), studentRedis.getName(), student.getGroupEntity(), student.getGroupEntity().getSpeciality(), elem.getValue()));
             if (i >= findDTO.getNumber()) {
                 break;
             }
@@ -444,7 +409,7 @@ public class UniversityService {
     @Transactional
     public void saveStudent(StudentDTO student) {
         studentRepository.save(new Student(student.getId(), student.getGroup()));
-        studentRedisRepository.save(new StudentRedis(student.getId(), student.getName()));
+        studentRedisRepository.save(new StudentRedis(student.getId(), /*student.getName()*/student));
     }
 
     @Transactional(readOnly = true)

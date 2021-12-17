@@ -1,0 +1,19 @@
+﻿[
+  {
+    "n": {
+    "identity": 340,
+    "labels": [
+            "schedule"
+          ],
+    "properties": {
+    "date": "2021-01-08T09:00:00",
+    "groups": [
+              "6CFB33BE",
+              "81D73E87",
+              "84FA5280"
+            ],
+    "id": "f56ef34e-ae5f-4538-a514-3b08fbe632b3"
+          }
+    }
+  }
+]

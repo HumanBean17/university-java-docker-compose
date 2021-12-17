@@ -1,0 +1,15 @@
+﻿[
+  {
+    "n": {
+    "identity": 250,
+    "labels": [
+            "visit"
+          ],
+    "properties": {
+    "visited": false,
+    "id": "ab5f9f4f-14a6-4dcf-af60-fe97aba537e3",
+    "student": "1c9e0a01-af6a-4198-aca4-a441794b5739"
+          }
+    }
+  }
+]
