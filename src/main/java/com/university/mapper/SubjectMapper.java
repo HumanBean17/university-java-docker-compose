@@ -23,4 +23,13 @@ public class SubjectMapper {
         subject.setCourse(CourseMapper.dtoToPostgres(subjectDTO.getCourse()));
         return subject;
     }
+
+    public static SubjectDTO mongoToDTO(SubjectMongo subjectMongo) {
+        SubjectDTO subjectDTO = new SubjectDTO();
+        subjectDTO.setId(subjectMongo.getId());
+        subjectDTO.setName(subjectMongo.getName());
+        subjectDTO.setLectures(null);
+        subjectDTO.setCourse(null);
+        return subjectDTO;
+    }
 }

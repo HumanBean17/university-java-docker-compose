@@ -69,8 +69,8 @@ POST http://localhost:8080/api/labThreeQuery
 Content-Type: application/json
 
 {
-  "groupId": "81D73E87",
-  "number": 1000
+  "groupId": "82A03E8C",
+  "number": 1
 }
 
 ###

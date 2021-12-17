@@ -32,6 +32,7 @@ public class Utils {
             lecture.setName(new LinkedList<>(Arrays.asList(elem.split(" "))).subList(0, 8).toString());
             lecture.setText(elem);
             lecture.setSubject(bigDockerSubj);
+            lecture.setSpecial(true);
             lectures.add(lecture);
         }
         for (String elem : Data.LINUX_LECTURES) {
@@ -40,6 +41,7 @@ public class Utils {
             lecture.setName(new LinkedList<>(Arrays.asList(elem.split(" "))).subList(0, 2).toString());
             lecture.setText(elem);
             lecture.setSubject(linuxSubj);
+            lecture.setSpecial(false);
             lectures.add(lecture);
         }
         return lectures;

@@ -1,5 +1,6 @@
 package com.university.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,6 @@ public class CourseDTO implements Serializable {
     Integer hours;
     String name;
     Set<SubjectDTO> subjects = new HashSet<>();
+    @JsonIgnore
     Set<SpecialityDTO> specialities = new HashSet<>();
 }

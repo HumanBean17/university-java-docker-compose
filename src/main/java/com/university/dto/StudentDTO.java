@@ -1,5 +1,6 @@
 package com.university.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.university.entity.Group;
 import com.university.entity.Speciality;
 import lombok.*;
@@ -16,6 +17,7 @@ public class StudentDTO implements Serializable {
     String id;
     String name;
     Group group;
+    @JsonIgnore
     Speciality course;
     Integer visitPercentage;
 }

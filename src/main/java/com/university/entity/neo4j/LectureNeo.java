@@ -22,6 +22,7 @@ public class LectureNeo implements Serializable {
 
     @Id
     UUID id;
+    boolean isSpecial;
 
     @Relationship(type = "SCHEDULE", direction = Relationship.Direction.OUTGOING)
     Set<ScheduleNeo> schedules = new HashSet<>();

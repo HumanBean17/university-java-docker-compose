@@ -64,18 +64,35 @@ public class UniversityService {
     @Transactional(readOnly = true)
     public LabThreeDTO labThreeQuery(FindDTO findDTO) {
         LabThreeDTO result = new LabThreeDTO();
-
 //        scheduleNeoRepository.findScheduleNeoByGroupsIn(Collections.singletonList(findDTO.getGroupId()));
-
+        Set<UUID> lectures = new HashSet<>();
         List<ScheduleNeo> schedules = scheduleNeoRepository.findAll()
                 .stream()
                 .filter(elem -> elem.getGroups().contains(findDTO.getGroupId()))
                 .collect(Collectors.toList());
+        schedules.forEach(elem -> lectures.add(elem.getLecture().getId()));
 
         List<VisitNeo> visits = new LinkedList<>();
         schedules.forEach(elem -> visits.addAll(elem.getVisits()));
         result.getStudents().addAll(getStudentsWithVisitsNumber(findDTO, visits));
 
+        List<SpecialityMongo> specialities = specialityMongoRepository.findAll();
+        for (SpecialityMongo speciality : specialities) {
+            for (CourseMongo course : speciality.getCourses()) {
+                for (SubjectMongo subject : course.getSubjects()) {
+                    Set<UUID> tmpLectures = subject.getLectures()
+                            .stream()
+                            .map(LectureMongo::getId)
+                            .filter(lectures::contains)
+                            .collect(Collectors.toSet());
+                    if (!tmpLectures.isEmpty()) {
+                        result.getCourses().add(CourseMapper.mongoToDTO(course));
+//                        break;
+                    }
+                }
+//                break;
+            }
+        }
         return result;
     }
 

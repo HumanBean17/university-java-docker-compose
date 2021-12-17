@@ -19,6 +19,7 @@ public class LectureDTO implements Serializable {
     UUID id;
     String name;
     String text;
+    boolean isSpecial;
 
     Subject subject;
     Set<ScheduleDTO> schedules = new HashSet<>();

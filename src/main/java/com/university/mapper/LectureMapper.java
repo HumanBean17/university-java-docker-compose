@@ -10,25 +10,23 @@ import com.university.entity.neo4j.LectureNeo;
 public class LectureMapper {
 
     public static LectureMongo dtoToMongo(LectureDTO lectureDTO) {
-        LectureMongo lectureMongo = new LectureMongo(lectureDTO.getId(), lectureDTO.getName());
-        return lectureMongo;
+        return new LectureMongo(lectureDTO.getId(), lectureDTO.getName());
     }
 
     public static Lecture dtoToPostgres(LectureDTO lectureDTO) {
-        Lecture lecture = new Lecture(lectureDTO.getId(), lectureDTO.getSubject());
-        return lecture;
+        return new Lecture(lectureDTO.getId(), lectureDTO.getSubject());
     }
 
     public static LectureElastic dtoToElastic(LectureDTO lectureDTO) {
-        LectureElastic lecture = new LectureElastic(lectureDTO.getId().toString(), lectureDTO.getText());
-        return lecture;
+        return new LectureElastic(lectureDTO.getId().toString(), lectureDTO.getText());
     }
 
     public static LectureNeo dtoToNeo(LectureDTO lectureDTO, boolean callFromScheduleMapper) {
         LectureNeo lecture = new LectureNeo();
         lecture.setId(lectureDTO.getId());
+        lecture.setSpecial(lectureDTO.isSpecial());
         for (ScheduleDTO scheduleDTO : lectureDTO.getSchedules()) {
-            if (callFromScheduleMapper == true) {
+            if (callFromScheduleMapper) {
                 break;
             }
             lecture.getSchedules().add(ScheduleMapper.dtoToNeo(scheduleDTO));
