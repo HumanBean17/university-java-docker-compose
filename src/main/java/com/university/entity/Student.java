@@ -22,10 +22,12 @@ public class Student implements Serializable {
     @Id
     @Column(name = "id")
     String id;
+    @Column(name = "name")
+    String name;
 
-    @ToString.Exclude
-    @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "group_id")
-    Group groupEntity;
+//    @ToString.Exclude
+//    @JsonIgnore
+//    @OneToOne
+//    @JoinColumn(name = "group_id")
+//    Group groupEntity;
 }

@@ -8,7 +8,8 @@ public class StudentMapper {
     public static Student dtoToPostgres(StudentDTO studentDTO) {
         Student student = new Student();
         student.setId(studentDTO.getId());
-        student.setGroupEntity(student.getGroupEntity());
+        student.setName(student.getName());
+//        student.setGroupEntity(student.getGroupEntity());
         return student;
     }
 }

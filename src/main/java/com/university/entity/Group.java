@@ -27,10 +27,10 @@ public class Group implements Serializable {
     @Column(name = "group_code", nullable = false)
     String groupCode;
 
-    @ToString.Exclude
-    @JsonIgnore
-    @OneToMany(targetEntity = Schedule.class)
-    Set<Schedule> schedules = new HashSet<>();
+//    @ToString.Exclude
+//    @JsonIgnore
+//    @OneToMany(targetEntity = Schedule.class)
+//    Set<Schedule> schedules = new HashSet<>();
 
     @ToString.Exclude
     @JsonIgnore

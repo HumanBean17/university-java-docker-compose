@@ -100,7 +100,7 @@ public class UniversityController {
         Set<StudentDTO> studentDTOS = new HashSet<>();
         for (int i = 0; i < 30; i++) {
             StudentDTO studentDTO = getRandomStudent(group);
-            students.add(new Student(studentDTO.getId(), studentDTO.getGroup()));
+            students.add(new Student(studentDTO.getId(), studentDTO.getName()/*, studentDTO.getGroup()*/));
             studentDTOS.add(studentDTO);
         }
         group.getStudents().addAll(students);

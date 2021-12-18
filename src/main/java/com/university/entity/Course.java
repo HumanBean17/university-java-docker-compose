@@ -16,14 +16,16 @@ import java.util.UUID;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "schedule")
+@Table(name = "course")
 public class Course implements Serializable {
 
     @Id
     @Column(name = "id")
     UUID id;
-//    @Column(name = "hours")
-//    long hours;
+    @Column(name = "name")
+    String name;
+    @Column(name = "hours")
+    Integer hours;
 
     @ToString.Exclude
     @OneToMany(targetEntity = Speciality.class, cascade = CascadeType.ALL)

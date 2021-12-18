@@ -24,6 +24,8 @@ public class CourseMapper {
     public static Course dtoToPostgres(CourseDTO courseDTO) {
         Course course = new Course();
         course.setId(courseDTO.getId());
+        course.setHours(courseDTO.getHours());
+        course.setName(courseDTO.getName());
         for (SpecialityDTO speciality : courseDTO.getSpecialities()) {
             course.getSpecialities().add(SpecialityMapper.dtoToPostgres(speciality));
         }

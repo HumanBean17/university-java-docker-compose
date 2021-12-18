@@ -1,288 +1,293 @@
 {
-  "_id": "BinData(3, r0jDqBWQ88JqYTIe4Ct5gA==)",
+  "_id": BinData(3,
+  "3EBdw5rG9DqG0dDPeYxfqw=="
+  ),
   "name": "Информационные системы и технологии",
   "courses": [
     {
-      "_id": "BinData(3, JECSn0/VabVKahpu82YVhg==)",
+      "_id": BinData(3,
+      "Fk82ODhXzR/+uliuM+hojA=="
+      ),
+      "name": "Разработка безопасного программного обеспечения",
       "hour": 90,
       "subjects": [
         {
           "_id": BinData(3,
-          "S0jshAlWVk/E7eDI9lfegw=="
+          "lk0IceCdi4L+nFEZBnfGpQ=="
           ),
           "name": "Принципы построения, проектирования и эксплуатации информационных систем",
           "lectures": [
             {
               "_id": BinData(3,
-              "S05NUcQFUuhVDp+9HIPdkw=="
+              "00ub2y29LOQ6UicK70Rygw=="
               ),
-              "name": "E0F54460"
+              "name": "[, ]"
             },
             {
               "_id": BinData(3,
-              "dUSnLgREvGu8PnnaObwzrA=="
+              "L0vkKeHh+9/CVsY6ubqJmw=="
               ),
-              "name": "884BE947"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 11.\nВнастоящее]"
             },
             {
               "_id": BinData(3,
-              "c0LsF8Yo9HeAgP5FzTyNgw=="
+              "UkS5ng/Y2WJ/SALxB6ilgQ=="
               ),
-              "name": "51139C3B"
+              "name": "[ЛЕКЦИЯ, No4\n«Подсистемы]"
             },
             {
               "_id": BinData(3,
-              "80QgREHcjnRd5MvcGGrNpA=="
+              "vU6VoyhIxO7dGq4hKaduhw=="
               ),
-              "name": "66180BE8"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 4.\nКратко]"
             },
             {
               "_id": BinData(3,
-              "IkzAmg8yABGTcrLBry2flA=="
+              "4EmpU3rSNzLkL2/yheuNsg=="
               ),
-              "name": "E8869083"
+              "name": "[ЛЕКЦИЯ, No5\n«Основные]"
             },
             {
               "_id": BinData(3,
-              "d044MkloSuVpfmXbs3BNpQ=="
+              "009lm9VDw2LPaugr5KK5hw=="
               ),
-              "name": "EE1EAB96"
+              "name": "[ЛЕКЦИЯ, No2\n«Подсистемы]"
             },
             {
               "_id": BinData(3,
-              "HEEDtt3he50zgrN41vNSgg=="
+              "hEyTHZwLMVn26rH303FdkA=="
               ),
-              "name": "8E2F77B9"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 8.\nШаблоны]"
             },
             {
               "_id": BinData(3,
-              "dURAdfd+T1qPVpXWH8L8tg=="
+              "kEfpyGaPWDovbDniBnAhng=="
               ),
-              "name": "177432F4"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 5.\nВнастоящее]"
             },
             {
               "_id": BinData(3,
-              "A0+r6qc6O5Lu0NjLPCL+oQ=="
+              "s0JoERTXLt4jY6q5HiaSnw=="
               ),
-              "name": "6AD7BBC5"
+              "name": "[1., 2.\nЛЕКЦИЯ]"
             },
             {
               "_id": BinData(3,
-              "5EUD/cSjV7iUde1Cui6Ohg=="
+              "pE5mXDT/WjtcSMKCOYtrjw=="
               ),
-              "name": "7AC7CDB0"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 12.\n7.1.]"
             },
             {
               "_id": BinData(3,
-              "6EvFbLqN6MXLry4wGDwamw=="
+              "BkDrCMiEexhuBBC1WBwQlQ=="
               ),
-              "name": "83BC61F6"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 13.\nАнализ]"
             },
             {
               "_id": BinData(3,
-              "EkBZOrjz/2S0cYadxKIGvQ=="
+              "oUB0RK0ItqVUxrckntDUgA=="
               ),
-              "name": "A160FD60"
+              "name": "[ЛЕКЦИЯ, No7\n«Развертывание]"
             },
             {
               "_id": BinData(3,
-              "eUB88GI5GXMubgCh7LMOrg=="
+              "tUp6haQg23N6h41UaNNNhg=="
               ),
-              "name": "66388316"
+              "name": "[ЛЕКЦИЯ, No3\n«Подсистемы]"
             },
             {
               "_id": BinData(3,
-              "K0RFEcEXgXTT7oltM6t3qQ=="
+              "xER13L1FI3uoKMTBue7SoQ=="
               ),
-              "name": "981A739B"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 7.\nИсточники]"
             },
             {
               "_id": BinData(3,
-              "rU0Nm4DzVlNRr2tnzCafrA=="
+              "6UfJJmPCJ5XRWa6h9YOnkw=="
               ),
-              "name": "731EFA28"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 10.\nКлассический]"
             },
             {
               "_id": BinData(3,
-              "EErAnfKATpnUfFJCzLSEkw=="
+              "cEUllvry05iIA9oKhU3jpQ=="
               ),
-              "name": "E92BE093"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 14.\nТеперь]"
             },
             {
               "_id": BinData(3,
-              "GEKHEhxnOIy08ShP82DFjg=="
+              "ik6aianZqnOVL2Xly/2npQ=="
               ),
-              "name": "9C53A991"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 2.\nОблачные]"
             },
             {
               "_id": BinData(3,
-              "+EW3uRCLnZwngbgTv9IQtA=="
+              "LEplECYY9OFIkRNllyKXvg=="
               ),
-              "name": "BF001A5D"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 1.\nСовременное]"
             },
             {
               "_id": BinData(3,
-              "kEWwI0lHbfy0BGocK6r8rA=="
+              "4kGBlzTRRbZgnRpXWxhxpQ=="
               ),
-              "name": "2C73B699"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 9.\nПроцесс]"
             },
             {
               "_id": BinData(3,
-              "O0g2uzUF3ua2lIFUrX1ahg=="
+              "RUWS34/Qs/nsFnzLpNwrng=="
               ),
-              "name": "F1B03AF5"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 6.\nОбщий]"
             },
             {
               "_id": BinData(3,
-              "i0NQ/FS9BybIlguA5BQfoA=="
+              "KUXeGjg263b6VMOUM9ihjw=="
               ),
-              "name": "CB9400A5"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 3.\nОблачные]"
             },
             {
               "_id": BinData(3,
-              "+k9TQfwBmvaPOv7MN5ncnA=="
+              "UkN5yEScOeZXsHOKlAtJnw=="
               ),
-              "name": "22A438B6"
+              "name": "[ЛЕКЦИЯ, No8\n«Конфигурирование]"
             }
           ]
         },
         {
           "_id": BinData(3,
-          "7EdOPqw768xL9VK1R0xgqA=="
+          "AUlCZRIj0fHRMCL0tdLIpQ=="
           ),
           "name": "Основы администрирования программно-аппаратных комплексов под управлением ОС Linux",
           "lectures": [
             {
               "_id": BinData(3,
-              "+EW3uRCLnZwngbgTv9IQtA=="
+              "cEUllvry05iIA9oKhU3jpQ=="
               ),
-              "name": "BF001A5D"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 14.\nТеперь]"
             },
             {
               "_id": BinData(3,
-              "IkzAmg8yABGTcrLBry2flA=="
+              "L0vkKeHh+9/CVsY6ubqJmw=="
               ),
-              "name": "E8869083"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 11.\nВнастоящее]"
             },
             {
               "_id": BinData(3,
-              "+k9TQfwBmvaPOv7MN5ncnA=="
+              "pE5mXDT/WjtcSMKCOYtrjw=="
               ),
-              "name": "22A438B6"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 12.\n7.1.]"
             },
             {
               "_id": BinData(3,
-              "EErAnfKATpnUfFJCzLSEkw=="
+              "oUB0RK0ItqVUxrckntDUgA=="
               ),
-              "name": "E92BE093"
+              "name": "[ЛЕКЦИЯ, No7\n«Развертывание]"
             },
             {
               "_id": BinData(3,
-              "GEKHEhxnOIy08ShP82DFjg=="
+              "tUp6haQg23N6h41UaNNNhg=="
               ),
-              "name": "9C53A991"
+              "name": "[ЛЕКЦИЯ, No3\n«Подсистемы]"
             },
             {
               "_id": BinData(3,
-              "dUSnLgREvGu8PnnaObwzrA=="
+              "vU6VoyhIxO7dGq4hKaduhw=="
               ),
-              "name": "884BE947"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 4.\nКратко]"
             },
             {
               "_id": BinData(3,
-              "S05NUcQFUuhVDp+9HIPdkw=="
+              "UkS5ng/Y2WJ/SALxB6ilgQ=="
               ),
-              "name": "E0F54460"
+              "name": "[ЛЕКЦИЯ, No4\n«Подсистемы]"
             },
             {
               "_id": BinData(3,
-              "kEWwI0lHbfy0BGocK6r8rA=="
+              "4kGBlzTRRbZgnRpXWxhxpQ=="
               ),
-              "name": "2C73B699"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 9.\nПроцесс]"
             },
             {
               "_id": BinData(3,
-              "O0g2uzUF3ua2lIFUrX1ahg=="
+              "009lm9VDw2LPaugr5KK5hw=="
               ),
-              "name": "F1B03AF5"
+              "name": "[ЛЕКЦИЯ, No2\n«Подсистемы]"
             },
             {
               "_id": BinData(3,
-              "i0NQ/FS9BybIlguA5BQfoA=="
+              "s0JoERTXLt4jY6q5HiaSnw=="
               ),
-              "name": "CB9400A5"
+              "name": "[1., 2.\nЛЕКЦИЯ]"
             },
             {
               "_id": BinData(3,
-              "c0LsF8Yo9HeAgP5FzTyNgw=="
+              "00ub2y29LOQ6UicK70Rygw=="
               ),
-              "name": "51139C3B"
+              "name": "[, ]"
             },
             {
               "_id": BinData(3,
-              "eUB88GI5GXMubgCh7LMOrg=="
+              "kEfpyGaPWDovbDniBnAhng=="
               ),
-              "name": "66388316"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 5.\nВнастоящее]"
             },
             {
               "_id": BinData(3,
-              "A0+r6qc6O5Lu0NjLPCL+oQ=="
+              "ik6aianZqnOVL2Xly/2npQ=="
               ),
-              "name": "6AD7BBC5"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 2.\nОблачные]"
             },
             {
               "_id": BinData(3,
-              "rU0Nm4DzVlNRr2tnzCafrA=="
+              "BkDrCMiEexhuBBC1WBwQlQ=="
               ),
-              "name": "731EFA28"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 13.\nАнализ]"
             },
             {
               "_id": BinData(3,
-              "d044MkloSuVpfmXbs3BNpQ=="
+              "LEplECYY9OFIkRNllyKXvg=="
               ),
-              "name": "EE1EAB96"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 1.\nСовременное]"
             },
             {
               "_id": BinData(3,
-              "EkBZOrjz/2S0cYadxKIGvQ=="
+              "hEyTHZwLMVn26rH303FdkA=="
               ),
-              "name": "A160FD60"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 8.\nШаблоны]"
             },
             {
               "_id": BinData(3,
-              "K0RFEcEXgXTT7oltM6t3qQ=="
+              "4EmpU3rSNzLkL2/yheuNsg=="
               ),
-              "name": "981A739B"
+              "name": "[ЛЕКЦИЯ, No5\n«Основные]"
             },
             {
               "_id": BinData(3,
-              "5EUD/cSjV7iUde1Cui6Ohg=="
+              "UkN5yEScOeZXsHOKlAtJnw=="
               ),
-              "name": "7AC7CDB0"
+              "name": "[ЛЕКЦИЯ, No8\n«Конфигурирование]"
             },
             {
               "_id": BinData(3,
-              "dURAdfd+T1qPVpXWH8L8tg=="
+              "RUWS34/Qs/nsFnzLpNwrng=="
               ),
-              "name": "177432F4"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 6.\nОбщий]"
             },
             {
               "_id": BinData(3,
-              "6EvFbLqN6MXLry4wGDwamw=="
+              "xER13L1FI3uoKMTBue7SoQ=="
               ),
-              "name": "83BC61F6"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 7.\nИсточники]"
             },
             {
               "_id": BinData(3,
-              "HEEDtt3he50zgrN41vNSgg=="
+              "6UfJJmPCJ5XRWa6h9YOnkw=="
               ),
-              "name": "8E2F77B9"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 10.\nКлассический]"
             },
             {
               "_id": BinData(3,
-              "80QgREHcjnRd5MvcGGrNpA=="
+              "KUXeGjg263b6VMOUM9ihjw=="
               ),
-              "name": "66180BE8"
+              "name": "[Принципы, построения,, проектирования, и, эксплуатации, ИС., Лекция, 3.\nОблачные]"
             }
           ]
         }
