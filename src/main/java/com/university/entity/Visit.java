@@ -1,9 +1,11 @@
 package com.university.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
 @Getter
@@ -20,11 +22,16 @@ public class Visit implements Serializable {
     UUID id;
     @Column(name = "visited")
     boolean visited;
+    @Column(name = "date")
+    Date date;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "schedule_id")
     Schedule schedule;
-    @OneToOne
+
+    @ToString.Exclude
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
     Student student;
 }

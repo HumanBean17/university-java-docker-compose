@@ -89,36 +89,4 @@ public class UniversityController {
         return universityService.getAllStudents();
     }
 
-    /***
-     *
-     * GROUP API
-     */
-    @GetMapping(value = "/saveRandomGroup", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void saveRandomGroup() {
-        Group group = getRandomGroup();
-        Set<Student> students = new HashSet<>();
-        Set<StudentDTO> studentDTOS = new HashSet<>();
-        for (int i = 0; i < 30; i++) {
-            StudentDTO studentDTO = getRandomStudent(group);
-            students.add(new Student(studentDTO.getId(), studentDTO.getName()/*, studentDTO.getGroup()*/));
-            studentDTOS.add(studentDTO);
-        }
-        group.getStudents().addAll(students);
-        universityService.saveGroup(group);
-        for (StudentDTO student : studentDTOS) {
-            universityService.saveStudent(student);
-        }
-    }
-
-//    @GetMapping(value = "/getAllGroupsMongo", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<GroupMongo> getAllGroupsMongo() {
-//        return universityService.getAllGroupsMongo();
-//    }
-//
-//    @GetMapping(value = "/getAllGroups", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public List<GroupMongo> getAllGroups() {
-//        return universityService.getAllGroupsMongo();
-////        return universityService.getAllGroups();
-//    }
-
 }

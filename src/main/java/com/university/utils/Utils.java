@@ -1,12 +1,10 @@
 package com.university.utils;
 
-import com.university.dto.LectureDTO;
-import com.university.dto.ScheduleDTO;
-import com.university.dto.StudentDTO;
-import com.university.dto.VisitDTO;
+import com.university.dto.*;
 import com.university.entity.*;
 import com.university.mapper.LectureMapper;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -17,6 +15,7 @@ public class Utils {
     public static VisitDTO getRandomVisit(ScheduleDTO schedule, StudentDTO studentDTO) {
         VisitDTO visit = new VisitDTO();
         visit.setId(UUID.randomUUID());
+        visit.setDate(java.sql.Timestamp.valueOf(schedule.getDate()));
         visit.setVisited(rand.nextBoolean());
         visit.setSchedule(schedule);
         visit.setStudent(studentDTO);
@@ -56,14 +55,14 @@ public class Utils {
         return schedule;
     }
 
-    public static Group getRandomGroup() {
-        Group group = new Group();
+    public static GroupDTO getRandomGroup() {
+        GroupDTO group = new GroupDTO();
         group.setId(UUID.randomUUID());
         group.setGroupCode(UUID.randomUUID().toString().substring(0, 8).toUpperCase(Locale.ROOT));
         return group;
     }
 
-    public static StudentDTO getRandomStudent(Group group) {
+    public static StudentDTO getRandomStudent(GroupDTO group) {
         StudentDTO student = new StudentDTO();
         student.setId(UUID.randomUUID().toString());
         student.setName(Data.NAMES.get(rand.nextInt(Data.NAMES.size())));

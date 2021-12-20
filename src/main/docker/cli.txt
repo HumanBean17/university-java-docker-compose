@@ -1,6 +1,7 @@
 FLUSHALL
 
 MATCH (n) DETACH DELETE n
+MATCH p=()-->() RETURN p LIMIT 25
 
 db.specialityMongo.find()
 db.specialityMongo.deleteMany({})

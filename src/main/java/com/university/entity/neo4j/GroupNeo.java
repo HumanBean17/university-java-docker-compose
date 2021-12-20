@@ -6,7 +6,6 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -16,16 +15,13 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Node(value = "schedule")
-public class ScheduleNeo implements Serializable {
+@Node(value = "group")
+public class GroupNeo implements Serializable {
 
     @Id
     UUID id;
-    LocalDateTime date;
+    String groupCode;
 
-    @Relationship(type = "GROUP", direction = Relationship.Direction.OUTGOING)
-    Set<GroupNeo> groups = new HashSet<>();
-
-    @Relationship(type = "LECTURE", direction = Relationship.Direction.OUTGOING)
-    LectureNeo lecture;
+//    @Relationship(direction = Relationship.Direction.OUTGOING)
+    Set<UUID> students = new HashSet<>();
 }

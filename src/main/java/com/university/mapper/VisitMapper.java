@@ -12,6 +12,7 @@ public class VisitMapper {
         Visit visit = new Visit();
         visit.setId(visitDTO.getId());
         visit.setVisited(visitDTO.isVisited());
+        visit.setDate(visitDTO.getDate());
         visit.setSchedule(ScheduleMapper.dtoToPostgres(visitDTO.getSchedule()));
         visit.setStudent(StudentMapper.dtoToPostgres(visitDTO.getStudent()));
         return visit;

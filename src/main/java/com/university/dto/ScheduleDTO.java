@@ -21,5 +21,5 @@ public class ScheduleDTO implements Serializable {
 
     LectureDTO lecture;
     Set<VisitDTO> visits = new HashSet<>();
-    Set<Group> groups = new HashSet<>();
+    Set<GroupDTO> groups = new HashSet<>();
 }

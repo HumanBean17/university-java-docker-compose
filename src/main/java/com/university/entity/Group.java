@@ -24,22 +24,17 @@ public class Group implements Serializable {
     @Column(name = "id")
     UUID id;
 
-    @Column(name = "group_code", nullable = false)
-    String groupCode;
-
-//    @ToString.Exclude
-//    @JsonIgnore
-//    @OneToMany(targetEntity = Schedule.class)
-//    Set<Schedule> schedules = new HashSet<>();
+//    @Column(name = "group_code", nullable = false)
+//    String groupCode;
 
     @ToString.Exclude
     @JsonIgnore
-    @OneToMany(targetEntity = Student.class, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = Student.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     Set<Student> students = new HashSet<>();
 
     @ToString.Exclude
-    @ManyToOne
     @JsonIgnore
+    @ManyToOne(targetEntity = Speciality.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "speciality_id")
     Speciality speciality;
 

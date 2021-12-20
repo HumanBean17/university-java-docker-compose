@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.UUID;
 
 @Getter
@@ -18,6 +19,7 @@ public class VisitDTO implements Serializable {
 
     UUID id;
     boolean visited;
+    Date date;
 
     ScheduleDTO schedule;
     StudentDTO student;

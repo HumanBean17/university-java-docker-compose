@@ -16,8 +16,8 @@ public class StudentDTO implements Serializable {
 
     String id;
     String name;
-    Group group;
+    GroupDTO group;
     @JsonIgnore
-    Speciality course;
-    Integer visitPercentage;
+    SpecialityDTO speciality;
+    Integer visit;
 }

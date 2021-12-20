@@ -1,5 +1,6 @@
 package com.university.mapper;
 
+import com.university.dto.GroupDTO;
 import com.university.dto.ScheduleDTO;
 import com.university.dto.VisitDTO;
 import com.university.entity.Group;
@@ -15,18 +16,19 @@ public class ScheduleMapper {
         schedule.setId(scheduleDTO.getId());
         schedule.setDate(scheduleDTO.getDate());
         schedule.setLecture(LectureMapper.dtoToPostgres(scheduleDTO.getLecture()));
-        schedule.getGroups().addAll(scheduleDTO.getGroups());
+        for (GroupDTO group : scheduleDTO.getGroups()) {
+            schedule.getGroups().add(GroupMapper.dtoToPostgres(group));
+        }
         return schedule;
     }
 
     public static ScheduleNeo dtoToNeo(ScheduleDTO scheduleDTO) {
         ScheduleNeo scheduleNeo = new ScheduleNeo();
+        scheduleNeo.setId(scheduleDTO.getId());
         scheduleNeo.setDate(scheduleDTO.getDate());
         scheduleNeo.setLecture(LectureMapper.dtoToNeo(scheduleDTO.getLecture(), true));
-        scheduleNeo.setId(scheduleDTO.getId());
-        scheduleNeo.setGroups(scheduleDTO.getGroups().stream().map(Group::getGroupCode).collect(Collectors.toSet()));
-        for (VisitDTO visitDTO : scheduleDTO.getVisits()) {
-            scheduleNeo.getVisits().add(VisitMapper.dtoToNeo(visitDTO));
+        for (GroupDTO group : scheduleDTO.getGroups()) {
+            scheduleNeo.getGroups().add(GroupMapper.dtoToNeo(group));
         }
         return scheduleNeo;
     }
