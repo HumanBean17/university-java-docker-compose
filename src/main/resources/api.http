@@ -49,7 +49,7 @@ Content-Type: application/json
 {
   "lecturePhrase": "а",
   "from": "2021-01-01T00:00:00",
-  "to": "2021-11-01T00:00:00",
+  "to": "2021-05-01T00:00:00",
   "number": 100
 }
 
@@ -69,10 +69,10 @@ POST http://localhost:8080/api/labThreeQuery
 Content-Type: application/json
 
 {
-  "groupId": "B8803890",
+  "groupId": "979869A3",
   "number": 1000,
   "from": "2021-01-01T00:00:00",
-  "to": "2021-11-01T00:00:00"
+  "to": "2021-12-01T00:00:00"
 }
 
 ###

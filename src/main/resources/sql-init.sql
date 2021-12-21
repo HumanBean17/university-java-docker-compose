@@ -1,3 +1,7 @@
+ALTER TABLE schedule_groups DROP CONSTRAINT IF EXISTS uk_jxebxgfip5y9q1b12ajfxl07s;
+
+DROP TABLE IF EXISTS visit_1, visit_2, visit_3, visit_4, visit_5, visit_6, visit_7, visit_8, visit_9, visit_10, visit_11, visit_12;
+
 DROP TABLE IF EXISTS visit;
 
 CREATE TABLE IF NOT EXISTS visit
@@ -8,7 +12,7 @@ CREATE TABLE IF NOT EXISTS visit
     schedule_id UUID CONSTRAINT fkeit1tmoaf5vpdyrk2c23h74g REFERENCES schedule,
     student_id  VARCHAR(255) CONSTRAINT fk2b4q5y6gr7me4vvd4c6svm3ev REFERENCES student,
     CONSTRAINT visit_pkey PRIMARY KEY (id, date)
-    ) PARTITION BY RANGE (date);
+) PARTITION BY RANGE (date);
 
 CREATE TABLE IF NOT EXISTS visit_1 PARTITION OF visit
     FOR VALUES FROM ('2021-01-01') TO ('2021-02-01');
@@ -42,3 +46,8 @@ CREATE TABLE IF NOT EXISTS visit_10 PARTITION OF visit
 
 CREATE TABLE IF NOT EXISTS visit_11 PARTITION OF visit
     FOR VALUES FROM ('2021-11-01') TO ('2021-12-01');
+
+CREATE TABLE IF NOT EXISTS visit_12 PARTITION OF visit
+    FOR VALUES FROM ('2021-12-01') TO ('2021-12-31');
+
+
