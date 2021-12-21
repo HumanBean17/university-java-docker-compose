@@ -23,9 +23,13 @@ import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -37,6 +41,7 @@ import static org.elasticsearch.index.query.QueryBuilders.matchPhraseQuery;
 public class UniversityService {
 
     private final ElasticsearchRestTemplate elasticsearchRestTemplate;
+    private final EntityManager entityManager;
 
     // Elastic
     private final LectureElasticRepository lectureElasticRepository;
@@ -65,6 +70,13 @@ public class UniversityService {
         List<Visit> visits = new LinkedList<>();
         Set<UUID> studentIds = new HashSet<>();
         Set<UUID> lectures = new HashSet<>();
+        Set<Integer> months = new HashSet<Integer>(){{
+            Integer from = findDTO.getFrom().getMonthValue();
+            Integer to = findDTO.getTo().getMonthValue();
+            for (; from <= to; from++) {
+                add(from);
+            }
+        }};
         List<ScheduleNeo> schedules = null;
 
 //        scheduleNeoRepository.findScheduleNeoByGroupsIn(Collections.singletonList(findDTO.getGroupId()));
@@ -75,13 +87,20 @@ public class UniversityService {
         schedules.forEach(elem -> lectures.add(elem.getLecture().getId()));
 
         for (ScheduleNeo schedule : schedules) {
+            if (!(schedule.getDate().isAfter(findDTO.getFrom()) && schedule.getDate().isBefore(findDTO.getTo()))) {
+                continue;
+            }
             for (GroupNeo group : schedule.getGroups()) {
                 studentIds.addAll(group.getStudents());
             }
         }
 
         for (UUID id : studentIds) {
-            visits.addAll(visitRepository.findAllByStudent_Id(id.toString()));
+            for (Integer m : months) {
+                visits.addAll(entityManager.createNativeQuery("SELECT * FROM visit_" + m + " v WHERE v.student_id = ?1", Visit.class)
+                        .setParameter(1, id.toString())
+                        .getResultList());
+            }
         }
 
         result.getStudents().addAll(getStudentsWithVisitsNumber(findDTO, visits));
@@ -158,18 +177,31 @@ public class UniversityService {
 
     @Transactional(readOnly = true)
     public LabOneDTO labOneQuery(FindDTO findDTO) {
-        Set<Visit> visits = new HashSet<>();
-        Set<UUID> studentIds = new HashSet<>();
         LabOneDTO result = new LabOneDTO();
 
-        List<UUID> tmpLectures = findByTextEntry(findDTO.getLecturePhrase()).
+        Set<Visit> visits = new HashSet<>();
+        Set<UUID> studentIds = new HashSet<>();
+        Set<Integer> months = new HashSet<Integer>(){{
+            Integer from = findDTO.getFrom().getMonthValue();
+            Integer to = findDTO.getTo().getMonthValue();
+            for (; from <= to; from++) {
+                add(from);
+            }
+        }};
+        List<LectureNeo> lectures = null;
+        List<UUID> tmpLectures = null;
+
+        tmpLectures = findByTextEntry(findDTO.getLecturePhrase()).
                 stream()
                 .map(elem -> UUID.fromString(elem.getId()))
                 .collect(Collectors.toList());
-        List<LectureNeo> lectures = lectureNeoRepository.findAllById(tmpLectures);
+        lectures = lectureNeoRepository.findAllById(tmpLectures);
 
         for (LectureNeo lecture : lectures) {
             for (ScheduleNeo schedule : lecture.getSchedules()) {
+                if (!(schedule.getDate().isAfter(findDTO.getFrom()) && schedule.getDate().isBefore(findDTO.getTo()))) {
+                    continue;
+                }
                 for (GroupNeo group : schedule.getGroups()) {
                     studentIds.addAll(group.getStudents());
                 }
@@ -177,7 +209,11 @@ public class UniversityService {
         }
 
         for (UUID id : studentIds) {
-            visits.addAll(visitRepository.findAllByStudent_Id(id.toString()));
+            for (Integer m : months) {
+                visits.addAll(entityManager.createNativeQuery("SELECT * FROM visit_" + m + " v WHERE v.student_id = ?1", Visit.class)
+                        .setParameter(1, id.toString())
+                        .getResultList());
+            }
         }
 
         result.getStudents().addAll(getStudentsWithVisitsPercent(findDTO, visits));
@@ -350,9 +386,6 @@ public class UniversityService {
         return "OK";
     }
 
-    /***
-     * SPECIALITY
-     */
     @Transactional
     public void saveSpeciality(SpecialityDTO specialityDTO) {
         specialityRepository.save(SpecialityMapper.dtoToPostgres(specialityDTO));
@@ -364,27 +397,17 @@ public class UniversityService {
         return specialityMongoRepository.findAll();
     }
 
-    /***
-     * VISIT
-     */
     @Transactional
     public void saveVisit(VisitDTO visit) {
         visitRepository.save(VisitMapper.dtoToPostgres(visit));
     }
 
-    /***
-     * SCHEDULE
-     */
     @Transactional
     public void saveSchedule(ScheduleDTO scheduleDTO) {
         scheduleNeoRepository.save(ScheduleMapper.dtoToNeo(scheduleDTO));
         scheduleRepository.save(ScheduleMapper.dtoToPostgres(scheduleDTO));
     }
 
-    /***
-     *
-     * LECTURE
-     */
     @Transactional(readOnly = true)
     public List<LectureElastic> findByTextEntry(String textEntry) {
         NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
@@ -413,13 +436,9 @@ public class UniversityService {
         return lst;
     }
 
-    /***
-     *
-     * STUDENT
-     */
     @Transactional
     public void saveStudent(StudentDTO student) {
-        studentRepository.save(new Student(student.getId(), student.getName()/*, student.getGroup()*/));
+        studentRepository.save(new Student(student.getId(), student.getName()));
         studentRedisRepository.save(new StudentRedis(student.getId(), student));
     }
 
@@ -428,18 +447,27 @@ public class UniversityService {
         return studentRedisRepository.findAllStudents();
     }
 
-    /***
-     *
-     * GROUP
-     */
     @Transactional
     public void saveGroup(GroupDTO groupDTO) {
         groupNeoRepository.save(GroupMapper.dtoToNeo(groupDTO));
         groupRepository.save(GroupMapper.dtoToPostgres(groupDTO));
     }
 
-    @Transactional(readOnly = true)
-    public List<Group> getAllGroups() {
-        return groupRepository.findAll();
+    @Scheduled(cron = "0 * * ? * *")
+    @Transactional
+    public void partitionsRoutine() {
+        entityManager.createNativeQuery("DROP TABLE IF EXISTS visit_1, visit_2, visit_3, visit_4, visit_5, visit_6, visit_7, visit_8, visit_9, visit_10, visit_11, visit_12")
+                .executeUpdate();
+        for (int i = 1; i <= 12; i++) {
+            if (i != 12) {
+                entityManager.createNativeQuery(String.format("CREATE TABLE IF NOT EXISTS visit_%d PARTITION OF visit FOR VALUES FROM ('%s') TO ('%s')",
+                                i, String.format("%d-%d-01", LocalDateTime.now().getYear(), i), String.format("%d-%d-01", LocalDateTime.now().getYear(), i + 1)))
+                        .executeUpdate();
+            } else {
+                entityManager.createNativeQuery(String.format("CREATE TABLE IF NOT EXISTS visit_%d PARTITION OF visit FOR VALUES FROM ('%s') TO ('%s')",
+                                i, String.format("%d-%d-01", LocalDateTime.now().getYear(), i), String.format("%d-%d-%d", LocalDateTime.now().getYear(), i, 31)))
+                        .executeUpdate();
+            }
+        }
     }
 }

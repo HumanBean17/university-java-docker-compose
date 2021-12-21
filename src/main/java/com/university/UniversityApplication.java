@@ -11,6 +11,7 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.data.neo4j.repository.config.EnableNeo4jRepositories;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -23,6 +24,7 @@ import java.util.Map;
 //@EnableMongoRepositories
 //@EnableElasticsearchRepositories
 @EnableNeo4jRepositories
+@EnableScheduling
 //@ComponentScan(basePackages = {"com.university", "com.university.entity.redis"})
 public class UniversityApplication {
 
