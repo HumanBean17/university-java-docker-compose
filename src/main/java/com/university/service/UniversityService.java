@@ -453,7 +453,7 @@ public class UniversityService {
         groupRepository.save(GroupMapper.dtoToPostgres(groupDTO));
     }
 
-    @Scheduled(cron = "0 * * ? * *")
+    @Scheduled(cron = "0 0 1 1 *")
     @Transactional
     public void partitionsRoutine() {
         entityManager.createNativeQuery("DROP TABLE IF EXISTS visit_1, visit_2, visit_3, visit_4, visit_5, visit_6, visit_7, visit_8, visit_9, visit_10, visit_11, visit_12")
